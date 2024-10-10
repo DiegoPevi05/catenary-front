@@ -13,5 +13,11 @@
 				"password_special": "Password must have one special character"
 			}
 		}
+	},
+	"sidebar": {
+		"greeting": "Hello",
+		"welcome": "Welcome",
+		"dashboard": "Dashboard",
+		"cantilevers": "Cantilevers"
 	}
 }

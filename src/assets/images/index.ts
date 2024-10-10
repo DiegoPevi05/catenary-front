@@ -1,3 +1,9 @@
 import LOGO from './logo.png';
 
-export { LOGO };
+/*************************CANTILEVER ************/
+import CANTILEVER from "./cantilevers/cantilever.svg"
+
+export { 
+	LOGO,
+	CANTILEVER
+};

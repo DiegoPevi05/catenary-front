@@ -4,6 +4,8 @@ import {AuthProvider, useAuth} from './contexts/AuthContext';
 import {BrowserRouter as Router, Routes, Route , Navigate, Outlet} from 'react-router-dom';
 import SignIn from './pages/signin';
 import "./lib/i18n.ts";
+import CantileverPage from './pages/cantilever.tsx';
+import HomePage from './pages/home.tsx';
 
 
 interface ProtectedRouteProps {
@@ -36,7 +38,18 @@ const AppRoutes: FC = () => {
           <ProtectedRoute
             isAllowed={user != null && user != undefined}
           >
-            <h1>home</h1>
+            <HomePage/>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/cantilevers"
+        element={
+          <ProtectedRoute
+            isAllowed={user != null && user != undefined}
+          >
+            <CantileverPage/>
           </ProtectedRoute>
         }
       />
