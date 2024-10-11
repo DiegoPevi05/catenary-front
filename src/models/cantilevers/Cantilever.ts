@@ -3,8 +3,8 @@ class Cantilever {
   contact_wire_height: number;
   system_height:number;
   zig_zag:number;
-  isolator_length_1:number;
-  isolator_length_2:number;
+  upper_isolator_length:number;
+  bottom_isolator_length:number;
   bitola:number;
   esc:number;
   pv:number;
@@ -14,8 +14,8 @@ class Cantilever {
     system_height:number,
     contact_wire_height: number,
     zig_zag:number,
-    isolator_length_1:number,
-    isolator_length_2:number,
+    upper_isolator_length:number,
+    bottom_isolator_length:number,
     bitola:number,
     esc:number,
     pv:number
@@ -24,8 +24,8 @@ class Cantilever {
     this.system_height = system_height;
     this.contact_wire_height = contact_wire_height;
     this.zig_zag = zig_zag;
-    this.isolator_length_1 = isolator_length_1;
-    this.isolator_length_2 = isolator_length_2;
+    this.upper_isolator_length = upper_isolator_length;
+    this.bottom_isolator_length = bottom_isolator_length;
     this.bitola = bitola;
     this.esc = esc;
     this.pv = pv;
