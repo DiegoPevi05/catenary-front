@@ -24,15 +24,11 @@ class CantileverGerman extends Cantilever {
     pv:number
   ) {
     // Call the parent constructbior to initialize inherited properties.
-    super(contact_wire_height, system_height, zig_zag, isolator_length_1, isolator_length_2, bitola, esc, pv );
+    super(system_height,contact_wire_height, zig_zag, isolator_length_1, isolator_length_2, bitola, esc, pv );
     this.type = type;
     this.alpha_superior_tube = alpha_superior_tube;
     this.alpha_antibalzante = alpha_antibalzante;
     this.alpha_atirantado = alpha_atirantado;
-  }
-
-  degreesToRadians(degrees: number): number {
-    return degrees * (Math.PI / 180);
   }
 
   getFixedPointsDistance():number{
@@ -43,7 +39,7 @@ class CantileverGerman extends Cantilever {
   getFixedPoints():{x1:number,y1:number, x2:number, y2:number}{
 
     let x1 =  0;
-    let y1 = this.getMwAxis().x+(Math.tan(this.degreesToRadians(this.alpha_superior_tube)))*this.getCwAxis().x - 123;
+    let y1 = this.getMwAxis().y+(Math.tan(this.degreesToRadians(this.alpha_superior_tube)))*this.getMwAxis().x - 123;
     let x2 =  0;
     let y2 =  y1 - this.getFixedPointsDistance();
 
@@ -80,4 +76,4 @@ class CantileverGerman extends Cantilever {
   }
 }
 
-export { CantileverGerman }
+export default CantileverGerman;
