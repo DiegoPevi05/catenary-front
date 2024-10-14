@@ -83,6 +83,14 @@ class Cantilever {
 
   }
 
+  getMarginViewer():{left:number, right:number, top:number, bottom:number}{
+    return {
+      left: -1000,
+      right:this.getCwAxis().x + 1000,
+      bottom: this.getCwAxis().y - 500,
+      top:this.getMwAxis().y + 500
+    }
+  }
 
 }
 
