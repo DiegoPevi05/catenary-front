@@ -15,7 +15,7 @@ const CantileverPage = () => {
     262, // Isolator_bottom_eye_to_tube_length
     4, // Superior Tube Inclincation
     0, // Inferior Tube Inclination
-    4, // Inferior Tube Inclination
+    0, // Inferior Tube Inclination
     400, // Bitola length
     0, // Height diference between pole fix point and bitola
     2150, // Distance between center of via and pole face
@@ -24,7 +24,10 @@ const CantileverPage = () => {
     250, //wire support to eye clamp distance
     81, // eye clamp eye to tube length
     42, // fixed distance pole to pin
-    42 // fixed distance pin to connection
+    42, // fixed distance pin to connection
+    54, //
+    { eye_to_cw_x: 15.99, eye_to_cw_y:100, angle_to_cw:94 },//
+    40 //end point distance
   );
 
   return(
