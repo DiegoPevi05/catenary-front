@@ -1,26 +1,40 @@
-import {CantileverGermanParams, CantileverParams} from "../../types/cantilever";
+import {CantileverGermanParams, SteelTube, Isolator, WireSupport, EyeClamp, SwivelBracket, SwivelClip, SwivelClevis, Hook_end_Fitting} from "../../types/cantilever";
 import { Cantilever } from "./Cantilever";
 
 // Define a subclass CantileverGerman, inheriting from Cantilever.
 class CantileverGerman extends Cantilever {
   // Additional property specific to CantileverGerman.
   type:'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA';
-  alpha_superior_tube: number;
-  alpha_registration_arm: number;
-  alpha_steady_arm:number;
-  wire_support_wire_to_tube_length:number;
-  wire_support_end_distance:number;
-  wire_support_to_eye_clamp_distance:number;
-  eye_clamp_eye_to_tube_length:number;
-  swivel_with_clevis_pole_to_pin_distance:number;
-  swivel_with_clevis_pin_to_fix_connection_length:number;
-  clevis_end_fitting_pin_to_tube_length:number;
-  cw_swivel_clip_holder:{
-    eye_to_cw_x:number;
-    eye_to_cw_y:number;
-    angle_to_cw:number;
+  stay_tube:{
+    alpha:number;
+    tube:SteelTube;
+    isolator:Isolator;
+    mw_support:{
+      wireSupport:WireSupport,
+      end_distance:number;
+      eye_clamp_distance:number;
+    };
+    eye_clamp:EyeClamp;
+    swivel_bracket:SwivelBracket;
+    swivel_clevis:SwivelClevis  
   };
-  steady_arm_end_point_distance:number
+  bracket_tube:{
+    tube:SteelTube;
+    isolator:Isolator;
+    swivel_bracket:SwivelBracket;
+    swivel_clevis:SwivelClevis  
+  };
+  register_arm:{
+    alpha:number;
+    tube:SteelTube;
+  } | null;
+  steady_arm:{
+    alpha:number;
+    tube:SteelTube;
+    eye_clamp:EyeClamp;
+    hook_end_fitting:Hook_end_Fitting
+    swivel_clip:SwivelClip;
+  };
 
   // Constructor to initialize the CantileverGerman properties.
   constructor(
@@ -28,91 +42,96 @@ class CantileverGerman extends Cantilever {
     contact_wire_height: number,
     system_height: number,
     zig_zag:number,
-    upper_isolator_length:number,
-    bottom_isolator_length:number,
-    alpha_superior_tube:number,
-    alpha_registration_arm:number,
-    alpha_steady_arm:number,
     bitola:number,
     esc:number,
     pv:number,
-    wire_support_wire_to_tube_length:number,
-    wire_support_end_distance:number,
-    wire_support_to_eye_clamp_distance:number,
-    eye_clamp_eye_to_tube_length:number,
-    swivel_with_clevis_pole_to_pin_distance:number,
-    swivel_with_clevis_pin_to_fix_connection_length:number,
-    clevis_end_fitting_pin_to_tube_length:number,
-    cw_swivel_clip_holder:{
-      eye_to_cw_x:number;
-      eye_to_cw_y:number;
-      angle_to_cw:number;
+    stay_tube:{
+      alpha:number;
+      tube:SteelTube;
+      isolator:Isolator;
+      mw_support:{
+        wireSupport:WireSupport,
+        end_distance:number;
+        eye_clamp_distance:number;
+      };
+      eye_clamp:EyeClamp;
+      swivel_bracket:SwivelBracket;
+      swivel_clevis:SwivelClevis  
     },
-    steady_arm_end_point_distance:number
+    bracket_tube:{
+      tube:SteelTube;
+      isolator:Isolator;
+      swivel_bracket:SwivelBracket;
+      swivel_clevis:SwivelClevis  
+    },
+    register_arm:{
+      alpha:number;
+      tube:SteelTube;
+    } | null,
+    steady_arm:{
+      alpha:number;
+      tube:SteelTube;
+      eye_clamp:EyeClamp;
+      hook_end_fitting:Hook_end_Fitting
+      swivel_clip:SwivelClip;
+    }
   ) {
     // Call the parent constructbior to initialize inherited properties.
-    super(system_height,contact_wire_height, zig_zag, upper_isolator_length, bottom_isolator_length, bitola, esc, pv );
+    super(system_height,contact_wire_height, zig_zag, bitola, esc, pv );
     this.type = type;
-    this.alpha_superior_tube = alpha_superior_tube;
-    this.alpha_registration_arm = alpha_registration_arm;
-    this.alpha_steady_arm = alpha_steady_arm;
-    this.wire_support_wire_to_tube_length = wire_support_wire_to_tube_length;
-    this.wire_support_end_distance = wire_support_end_distance;
-    this.wire_support_to_eye_clamp_distance = wire_support_to_eye_clamp_distance;
-    this.eye_clamp_eye_to_tube_length = eye_clamp_eye_to_tube_length;
-    this.swivel_with_clevis_pole_to_pin_distance = swivel_with_clevis_pole_to_pin_distance;
-    this.swivel_with_clevis_pin_to_fix_connection_length = swivel_with_clevis_pin_to_fix_connection_length;
-    this.clevis_end_fitting_pin_to_tube_length = clevis_end_fitting_pin_to_tube_length;
-    this.cw_swivel_clip_holder = cw_swivel_clip_holder;
-    this.steady_arm_end_point_distance = steady_arm_end_point_distance;
+    this.stay_tube = stay_tube;
+    this.bracket_tube = bracket_tube;
+    this.register_arm = register_arm;
+    this.steady_arm = steady_arm;
   }
 
+  //getWireSupportDistanceFromFixedPoint
   getWireSupportDistanceFromFixedPoint():number {
-      return (this.getMwAxis().x - this.swivel_with_clevis_pole_to_pin_distance - this.swivel_with_clevis_pin_to_fix_connection_length)*(1/Math.cos(this.degreesToRadians(360 + this.alpha_superior_tube))) +  this.wire_support_wire_to_tube_length*(Math.tan(this.degreesToRadians(360 + this.alpha_superior_tube)));
+      return (this.getMwAxis().x - this.stay_tube.swivel_clevis.pin_eye - this.stay_tube.swivel_bracket.x_pin)*(1/Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha))) +  this.stay_tube.mw_support.wireSupport.h*(Math.tan(this.degreesToRadians(360 + this.stay_tube.alpha)));
   }
 
   getWireSupportFixedPoint():{x:number, y:number} {
 
-    let x_axis = this.getWireSupportDistanceFromFixedPoint() * Math.cos(this.degreesToRadians(360 + this.alpha_superior_tube)) + this.swivel_with_clevis_pole_to_pin_distance + this.swivel_with_clevis_pin_to_fix_connection_length; 
-    let y_axis =  this.getMwAxis().y - (1/Math.cos(this.degreesToRadians(360 + this.alpha_superior_tube)))*this.wire_support_wire_to_tube_length;
+    let x_axis = this.getWireSupportDistanceFromFixedPoint() * Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha)) + this.stay_tube.swivel_clevis.pin_eye + this.stay_tube.swivel_bracket.x_pin; 
+    let y_axis =  this.getMwAxis().y - (1/Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha)))*this.stay_tube.mw_support.wireSupport.h;
 
     return { x: x_axis, y:y_axis  }
   }
 
   getUpperTubeEndPoint():{x:number, y:number}{
-    let x_axis =  this.getWireSupportFixedPoint().x + this.wire_support_end_distance* Math.cos(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let x_axis =  this.getWireSupportFixedPoint().x + this.stay_tube.mw_support.end_distance* Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha));
 
-    let y_axis =  this.getWireSupportFixedPoint().y + this.wire_support_end_distance* Math.sin(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let y_axis =  this.getWireSupportFixedPoint().y + this.stay_tube.mw_support.end_distance* Math.sin(this.degreesToRadians(360 + this.stay_tube.alpha));
 
     return { x: x_axis, y:y_axis  }
   }
 
   getUpperTubeEyeClampTubeFixedPoint():{x:number,y:number}{
-    let x_axis =  this.getWireSupportFixedPoint().x - this.wire_support_to_eye_clamp_distance* Math.cos(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let x_axis =  this.getWireSupportFixedPoint().x - this.stay_tube.mw_support.eye_clamp_distance* Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha));
 
-    let y_axis =  this.getWireSupportFixedPoint().y - this.wire_support_to_eye_clamp_distance* Math.sin(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let y_axis =  this.getWireSupportFixedPoint().y - this.stay_tube.mw_support.eye_clamp_distance* Math.sin(this.degreesToRadians(360 + this.stay_tube.alpha));
 
     return { x: x_axis, y:y_axis  }
   }
 
   getUpperFixedPoint():{x:number,y:number}{
-    let x_axis =  this.getWireSupportFixedPoint().x - this.getWireSupportDistanceFromFixedPoint() * Math.cos(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let x_axis =  this.getWireSupportFixedPoint().x - this.getWireSupportDistanceFromFixedPoint() * Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha));
 
-    let y_axis =  this.getWireSupportFixedPoint().y - this.getWireSupportDistanceFromFixedPoint() * Math.sin(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let y_axis =  this.getWireSupportFixedPoint().y - this.getWireSupportDistanceFromFixedPoint() * Math.sin(this.degreesToRadians(360 + this.stay_tube.alpha));
 
     return { x: x_axis, y:y_axis  }
   }
 
   getUpperIsolatorPoint():{x:number, y:number}{
-    let x_axis =  this.getUpperFixedPoint().x + this.upper_isolator_length * Math.cos(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let x_axis =  this.getUpperFixedPoint().x + this.getIsolatorUtilLength(this.stay_tube.isolator) * Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha));
 
-    let y_axis =  this.getUpperFixedPoint().y + this.upper_isolator_length * Math.sin(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let y_axis =  this.getUpperFixedPoint().y + this.getIsolatorUtilLength(this.stay_tube.isolator) * Math.sin(this.degreesToRadians(360 + this.stay_tube.alpha));
     return { x: x_axis, y:y_axis  }
 
   }
 
   getUpperPoleFixedPoint():{x:number,y:number}{
-    let x_axis =  this.getUpperFixedPoint().x - this.swivel_with_clevis_pole_to_pin_distance - this.swivel_with_clevis_pin_to_fix_connection_length;
+    let x_axis =  this.getUpperFixedPoint().x - this.stay_tube.swivel_clevis.pin_eye - this.stay_tube.swivel_bracket.x_pin;
 
     let y_axis =  this.getUpperFixedPoint().y;
 
@@ -120,9 +139,9 @@ class CantileverGerman extends Cantilever {
   }
 
   getUpperTubeEyeClampFixedPoint():{x:number, y:number}{
-    let x_axis =  this.getUpperTubeEyeClampTubeFixedPoint().x + this.eye_clamp_eye_to_tube_length * Math.sin(this.degreesToRadians(360 + this.alpha_superior_tube));
+    let x_axis =  this.getUpperTubeEyeClampTubeFixedPoint().x + this.stay_tube.eye_clamp.h * Math.sin(this.degreesToRadians(360 + this.stay_tube.alpha));
 
-    let y_axis =  this.getUpperTubeEyeClampTubeFixedPoint().y - this.eye_clamp_eye_to_tube_length * Math.cos(this.degreesToRadians(360 + this.alpha_superior_tube)); 
+    let y_axis =  this.getUpperTubeEyeClampTubeFixedPoint().y - this.stay_tube.eye_clamp.h * Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha)); 
 
     return { x: x_axis, y:y_axis  }
   }
@@ -131,13 +150,13 @@ class CantileverGerman extends Cantilever {
   getBottomPoleFixedPoint():{x:number,y:number}{
     let x_axis =  this.getUpperPoleFixedPoint().x;
 
-    let y_axis =  this.getUpperPoleFixedPoint().y - Math.tan(this.degreesToRadians(360 + this.alpha_superior_tube))*this.getMwAxis().x  - this.system_height - 50;
+    let y_axis =  this.getUpperPoleFixedPoint().y - Math.tan(this.degreesToRadians(360 + this.stay_tube.alpha))*this.getMwAxis().x  - this.system_height - 50;
 
     return { x: x_axis, y:y_axis  }
   }
 
   getBottomFixedPoint():{x:number,y:number}{
-    let x_axis =  this.getBottomPoleFixedPoint().x + this.swivel_with_clevis_pole_to_pin_distance + this.swivel_with_clevis_pin_to_fix_connection_length;
+    let x_axis =  this.getBottomPoleFixedPoint().x + this.bracket_tube.swivel_clevis.pin_eye + this.bracket_tube.swivel_bracket.x_pin;
 
     let y_axis =  this.getBottomPoleFixedPoint().y;
 
@@ -156,16 +175,16 @@ class CantileverGerman extends Cantilever {
 
   getBottomIsolatorPoint(){
 
-    let x_axis =  this.getBottomFixedPoint().x + this.bottom_isolator_length * Math.cos(this.getInferiorTubeAngle().angle);
+    let x_axis =  this.getBottomFixedPoint().x + this.getIsolatorUtilLength(this.bracket_tube.isolator) * Math.cos(this.getInferiorTubeAngle().angle);
 
-    let y_axis =  this.getBottomFixedPoint().y + this.bottom_isolator_length * Math.sin(this.getInferiorTubeAngle().angle); 
+    let y_axis =  this.getBottomFixedPoint().y + this.getIsolatorUtilLength(this.bracket_tube.isolator) * Math.sin(this.getInferiorTubeAngle().angle); 
 
     return { x: x_axis, y:y_axis  }
   }
 
   getUpperEyeClampClevisFixedPoint():{x:number, y:number}{
 
-    let x_axis =  this.getUpperTubeEyeClampFixedPoint().x - this.clevis_end_fitting_pin_to_tube_length * Math.cos(this.getInferiorTubeAngle().angle);
+    let x_axis =  this.getUpperTubeEyeClampFixedPoint().x - this.stay_tube.eye_clamp * Math.cos(this.getInferiorTubeAngle().angle);
 
     let y_axis =  this.getUpperTubeEyeClampFixedPoint().y - this.clevis_end_fitting_pin_to_tube_length * Math.sin(this.getInferiorTubeAngle().angle); 
 
@@ -191,6 +210,59 @@ class CantileverGerman extends Cantilever {
 
     return { x: x_axis, y:y_axis  }
   }
+
+  getIntersectionPoint():{x:number, y:number}{
+
+    let length_bottom_arc = this.getDistanceBetweenTwoPoints(this.getBottomFixedPoint(),this.getSteadyArmFixedPoint());      
+
+    let inferior_tube_angle =  this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(), this.getUpperTubeEyeClampFixedPoint());
+
+    let bottom_left_angle =  inferior_tube_angle - this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(),this.getSteadyArmFixedPoint())
+
+    let upper_angle = 180 - this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(), this.getUpperTubeEyeClampFixedPoint()) - this.alpha_steady_arm;
+
+    let right_angle = 180  - upper_angle - bottom_left_angle;
+
+    //length_bottom_arc/sin(top-angle) = length_right_arc/sin(bottom-left-angle) =  length_left_arc/sin(bottom-right-angle)
+    let length_left_arc = Math.sin(this.degreesToRadians(right_angle))*(length_bottom_arc/Math.sin(this.degreesToRadians(upper_angle)));
+
+    let x_axis =  this.getBottomFixedPoint().x + length_left_arc * Math.cos(this.degreesToRadians(360 + inferior_tube_angle));
+
+    let y_axis =  this.getBottomFixedPoint().y + length_left_arc * Math.sin(this.degreesToRadians(360 + inferior_tube_angle)); 
+
+    return { x: x_axis, y:y_axis  }
+  }
+
+  getIntersectionTubeFixedPoint():{x:number,y:number}{
+
+    let bottom_left_angle = this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(), this.getUpperTubeEyeClampFixedPoint());
+
+    let internal_angle = bottom_left_angle + this.alpha_steady_arm;
+
+    let length_fixed_point = this.eye_clamp_32_eye_to_tube_length/Math.tan(this.radiansToDegress(internal_angle))
+
+    let x_axis =  this.getIntersectionPoint().x + length_fixed_point * Math.cos(this.degreesToRadians(360 + bottom_left_angle));
+
+    let y_axis =  this.getIntersectionPoint().y + length_fixed_point * Math.sin(this.degreesToRadians(360 + bottom_left_angle)); 
+
+    return { x: x_axis, y:y_axis  }
+  }
+  
+  getIntersectionSteadyArmFixedPoint():{x:number,y:number}{
+    let bottom_left_angle = this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(), this.getUpperTubeEyeClampFixedPoint());
+
+    let internal_angle = bottom_left_angle + this.alpha_steady_arm;
+
+    let length_fixed_point = this.eye_clamp_32_eye_to_tube_length/Math.sin(this.radiansToDegress(internal_angle))
+
+    let x_axis =  this.getIntersectionPoint().x + length_fixed_point * Math.cos(this.degreesToRadians(360 + this.alpha_steady_arm));
+
+    let y_axis =  this.getIntersectionPoint().y + length_fixed_point * Math.sin(this.degreesToRadians(360 + this.alpha_steady_arm)); 
+
+    return { x: x_axis, y:y_axis  }
+
+  }
+
 
 
   generateLinks():{x1:number,y1:number, x2:number,y2:number, dimension_line:boolean}[]{
@@ -230,6 +302,10 @@ class CantileverGerman extends Cantilever {
 
     links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y ,  x2: this.getSteadyArmEndPoint().x, y2:this.getSteadyArmEndPoint().y, dimension_line:true });
 
+    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y ,  x2: this.getIntersectionTubeFixedPoint().x, y2:this.getIntersectionTubeFixedPoint().y, dimension_line:true });
+
+    links.push({  x1: this.getIntersectionTubeFixedPoint().x, y1:this.getIntersectionTubeFixedPoint().y ,  x2: this.getIntersectionSteadyArmFixedPoint().x, y2:this.getIntersectionSteadyArmFixedPoint().y, dimension_line:true });
+
     return links;
   }
 
@@ -252,7 +328,7 @@ class CantileverGerman extends Cantilever {
       data.zig_zag,
       data.upper_isolator_length,
       data.bottom_isolator_length,
-      data.alpha_superior_tube,
+      data.stay_tube.alpha,
       data.alpha_registration_arm,
       data.alpha_steady_arm,
       data.bitola,
@@ -266,7 +342,8 @@ class CantileverGerman extends Cantilever {
       data.swivel_with_clevis_pin_to_fix_connection_length,
       data.clevis_end_fitting_pin_to_tube_length,
       data.cw_swivel_clip_holder,
-      data.steady_arm_end_point_distance
+      data.steady_arm_end_point_distance,
+      data.eye_clamp_32_eye_to_tube_length
     );
   }
 }

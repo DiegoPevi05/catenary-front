@@ -1,10 +1,10 @@
+import {Isolator} from "../../types/cantilever";
+
 class Cantilever {
   // Properties common to all cantilevers.
   contact_wire_height: number;
   system_height:number;
   zig_zag:number;
-  upper_isolator_length:number;
-  bottom_isolator_length:number;
   bitola:number;
   esc:number;
   pv:number;
@@ -14,8 +14,6 @@ class Cantilever {
     system_height:number,
     contact_wire_height: number,
     zig_zag:number,
-    upper_isolator_length:number,
-    bottom_isolator_length:number,
     bitola:number,
     esc:number,
     pv:number
@@ -24,8 +22,6 @@ class Cantilever {
     this.system_height = system_height;
     this.contact_wire_height = contact_wire_height;
     this.zig_zag = zig_zag;
-    this.upper_isolator_length = upper_isolator_length;
-    this.bottom_isolator_length = bottom_isolator_length;
     this.bitola = bitola;
     this.esc = esc;
     this.pv = pv;
@@ -33,6 +29,19 @@ class Cantilever {
 
   degreesToRadians(degrees: number): number {
     return degrees * (Math.PI / 180);
+  }
+
+  radiansToDegress(radians:number): number{
+    return radians * (180/Math.PI);
+  }
+
+  getDistanceBetweenTwoPoints(point1:{x:number,y:number},point2:{x:number,y:number}):number{
+    return  Math.sqrt(Math.pow((point2.y - point1.y), 2) + Math.pow((point2.x + point1.x),2))  ; 
+  }
+
+  getAngleBetweenTwoPoints(point1:{x:number,y:number},point2:{x:number,y:number}):number {
+
+    return this.radiansToDegress(Math.atan((point2.y - point1.y)/(point2.x - point1.x)));
   }
   
   getBitolaAngle(): number {
@@ -74,6 +83,10 @@ class Cantilever {
     }
 
     return { x: x_axis, y:y_axis  }
+  }
+
+  getIsolatorUtilLength(isolator:Isolator):number{
+    return isolator.eye_length - isolator.tube_length
   }
 
   getMwAxis():{x:number,y:number}{

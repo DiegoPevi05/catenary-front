@@ -1,29 +1,129 @@
+interface WireSupport{
+  id:number;
+  order_id:string;
+  designation:string;
+  weight:number;
+  operating_load:number; //Kilo Newtons
+  failing_operating_load:number;//Kilo Newtons
+  d:number;
+  h:number;
+}
+
+interface SteelTube{
+  id:number;
+  order_id:string;
+  designation:string;
+  weight:number;
+  max_delivery_length:number;
+  d:number;// mm
+  s:number;// mm
+}
+
+interface Isolator{
+  id:number;
+  order_id:string;
+  designation:string;
+  weight:number;
+  operating_load:number; //Kilo Newtons
+  d:number;//mm
+  eye_length:number;
+  tube_length:number;
+}
+
+interface Hook_end_Fitting{
+  id:number;
+  order_id:string;
+  designation:string;
+  weight:number;
+  operating_load:number; //Kilo Newtons
+  failing_operating_load:number;//Kilo Newtons
+  L:number;//mm
+  a:number;//mm
+  d:number;//mm
+}
+
+interface EyeClamp{
+  id:number;
+  order_id:string;
+  designation:string;
+  weight:number;
+  operating_load:number; //Kilo Newtons
+  failing_operating_load:number;//Kilo Newtons
+  h:number;//mm
+  d:number;//mm
+}
+
+interface SwivelBracket{
+  id:number;
+  order_id:string;
+  designation:string;
+  weight:number;
+  operating_load_f1:number;
+  failing_operating_load_f1:number;
+  operating_load_f2:number;
+  failing_operating_load_f2:number;
+  x_pin:number;
+}
+interface SwivelClevis{
+  id:number;
+  order_id:string;
+  designation:string;
+  weight:number;
+  operating_load:number;
+  failing_operating_load:number;
+  pin_eye:number;
+}
+
+interface SwivelClip{
+  id:number;
+  order_id:string;
+  designation:string;
+  weight:number;
+  operating_load:number; //Kilo Newtons
+  failing_operating_load:number;//Kilo Newtons
+  width:number;
+  cw_height:number;//mm
+  cw_angle:number;//mm
+}
+
 export interface CantileverGermanParams {
   type: 'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA';
   contact_wire_height: number;
   system_height: number;
   zig_zag: number;
-  upper_isolator_length: number;
-  bottom_isolator_length: number;
-  alpha_superior_tube: number;
-  alpha_registration_arm: number;
-  alpha_steady_arm: number;
   bitola: number;
   esc: number;
   pv: number;
-  wire_support_wire_to_tube_length: number;
-  wire_support_end_distance: number;
-  wire_support_to_eye_clamp_distance: number;
-  eye_clamp_eye_to_tube_length: number;
-  swivel_with_clevis_pole_to_pin_distance: number;
-  swivel_with_clevis_pin_to_fix_connection_length: number;
-  clevis_end_fitting_pin_to_tube_length: number;
-  cw_swivel_clip_holder: {
-    eye_to_cw_x: number;
-    eye_to_cw_y: number;
-    angle_to_cw: number;
-  };
-  steady_arm_end_point_distance: number;
+  stay_tube:{
+    alpha:number;
+    tube:SteelTube;
+    isolator:Isolator;
+    mw_support:{
+      wireSupport:WireSupport,
+      end_distance:number;
+      eye_clamp_distance:number;
+    };
+    eye_clamp:EyeClamp;
+    swivel_bracket:SwivelBracket;
+    swivel_clevis:SwivelClevis  
+  },
+  bracket_tube:{
+    tube:SteelTube;
+    isolator:Isolator;
+    swivel_bracket:SwivelBracket;
+    swivel_clevis:SwivelClevis  
+  },
+  register_arm:{
+    alpha:number;
+    tube:SteelTube;
+  } | null,
+  steady_arm:{
+    alpha:number;
+    tube:SteelTube;
+    eye_clamp:EyeClamp;
+    hook_end_fitting:Hook_end_Fitting
+    swivel_clip:SwivelClip;
+  }
 }
 
 export interface CantileverParams {
@@ -37,6 +137,10 @@ export interface CantileverParams {
     location_id:number;
     user_id:number;
     created_by:string;
+    model:{
+      code:"GY"|"ES"|"FR",
+      name:string;
+    }
     params:CantileverGermanParams;
     created_at:Date;
     updated_at:Date;
