@@ -1,3 +1,4 @@
+import {CantileverGermanParams, CantileverParams} from "../../types/cantilever";
 import { Cantilever } from "./Cantilever";
 
 // Define a subclass CantileverGerman, inheriting from Cantilever.
@@ -243,30 +244,29 @@ class CantileverGerman extends Cantilever {
   }
 
   // Deserialize data specifically for CantileverGerman.
-  static deserialize(data: string): CantileverGerman {
-    const parsedData = JSON.parse(data);
+  static deserialize(data: CantileverGermanParams): CantileverGerman {
     return new CantileverGerman(
-      parsedData.contact_wire_height,
-      parsedData.zig_zag,
-      parsedData.system_height,
-      parsedData.upper_isolator_length,
-      parsedData.bottom_isolator_length,
-      parsedData.bitola,
-      parsedData.esc,
-      parsedData.pv,
-      parsedData.type,
-      parsedData.alpha_superior_tube,
-      parsedData.alpha_registration_arm,
-      parsedData.alpha_steady_arm,
-      parsedData.wire_support_wire_to_tube_length,
-      parsedData.wire_support_end_distance,
-      parsedData.wire_support_to_eye_clamp_distance,
-      parsedData.eye_clamp_eye_to_tube_length,
-      parsedData.swivel_with_clevis_pole_to_pin_distance,
-      parsedData.swivel_with_clevis_pin_to_fix_connection_length,
-      parsedData.clevis_end_fitting_pin_to_tube_length,
-      parsedData.cw_swivel_clip_holder,
-      parsedData.steady_arm_end_point_distance
+      data.type,
+      data.contact_wire_height,
+      data.system_height,
+      data.zig_zag,
+      data.upper_isolator_length,
+      data.bottom_isolator_length,
+      data.alpha_superior_tube,
+      data.alpha_registration_arm,
+      data.alpha_steady_arm,
+      data.bitola,
+      data.esc,
+      data.pv,
+      data.wire_support_wire_to_tube_length,
+      data.wire_support_end_distance,
+      data.wire_support_to_eye_clamp_distance,
+      data.eye_clamp_eye_to_tube_length,
+      data.swivel_with_clevis_pole_to_pin_distance,
+      data.swivel_with_clevis_pin_to_fix_connection_length,
+      data.clevis_end_fitting_pin_to_tube_length,
+      data.cw_swivel_clip_holder,
+      data.steady_arm_end_point_distance
     );
   }
 }
