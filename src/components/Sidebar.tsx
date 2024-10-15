@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { LOGO, CANTILEVER} from "../assets/images";
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
@@ -64,7 +63,7 @@ const Sidebar = () => {
 
   return(
     <nav className="w-full h-full flex flex-col justify-start items-start gap-y-6">
-      <span className="w-full h-auto bg-secondary-dark flex items-center justify-center py-2">
+      <span className="w-full h-auto bg-secondary-dark flex items-center justify-center py-3">
         <img src={LOGO} alt="logo" className="h-8 w-auto"/>
       </span>
 

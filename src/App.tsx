@@ -6,6 +6,7 @@ import SignIn from './pages/signin';
 import "./lib/i18n.ts";
 import CantileverPage from './pages/cantilever.tsx';
 import HomePage from './pages/home.tsx';
+import CantileversPage from './pages/cantilevers.tsx';
 
 
 interface ProtectedRouteProps {
@@ -45,6 +46,17 @@ const AppRoutes: FC = () => {
 
       <Route
         path="/cantilevers"
+        element={
+          <ProtectedRoute
+            isAllowed={user != null && user != undefined}
+          >
+            <CantileversPage/>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/cantilever/:cantileverId"
         element={
           <ProtectedRoute
             isAllowed={user != null && user != undefined}

@@ -4,9 +4,20 @@ import Layout from "../components/Layout";
 import GermanCantilever from "../models/cantilevers/GermanCantilever";
 import {CantileverParams} from "../types/cantilever";
 import {CantileversData} from "../models/cantilevers/data";
+import {useLocation, useNavigate} from "react-router-dom";
+import {ChevronLeftIcon} from "lucide-react";
+
 
 const CantileverPage = () => {
-  const [cantilevers, setCantilevers] = useState<CantileverParams[]>(CantileversData);
+
+  const navigate = useNavigate();
+  const location = useLocation(); 
+  const previousRoute = location.state?.from || "/";
+
+  const goToRoute = (route:string) => {
+    navigate(route);
+  };
+
   const [selectedCantilever, setSelectedCantilever] = useState<{ data:CantileverParams | null, cantilever:GermanCantilever | null  }>({data: null  , cantilever: null});
 
   useEffect(()=>{
@@ -63,7 +74,12 @@ const CantileverPage = () => {
       <div className="h-full w-full grid grid-cols-3 grid-rows-2 gap-4">
         <div className="col-span-2 row-span-1 border-2 border-gray-light rounded-xl ">
           <div className="w-full h-full flex flex-col justify-start items-start p-4">
-            <label className="font-bold text-secondary-dark">Cantilever</label>
+            <div className="w-auto h-auto flex flex-row justify-start items-start gap-x-4">
+              <button onClick={()=>goToRoute(previousRoute)} className="w-10 h-10 p-2 bg-secondary-dark text-white duration-300  rounded-full hover:bg-primary active:scale-95">
+                <ChevronLeftIcon className="h-full w-full"/>
+              </button>
+              <h4 className="font-bold text-secondary-dark">Cantilever</h4>
+            </div>
             {selectedCantilever.cantilever == null ?
               <span>{"There is no cantilever selected"}</span>
             :
@@ -96,20 +112,8 @@ const CantileverPage = () => {
 
           </div>
         </div>
-        <div className="col-span-2 row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4">
-          <label className="font-bold text-secondary-dark">Cantilevers</label>
-          {cantilevers.map((cantilever,index)=>{
-            return(
-              <div key={`cantilever-${cantilever.external_id}-${index}`} className="border border-2 border-gray-light rounded-xl flex justify-start items-start w-full h-auto">
-                <div className="w-auto h-full flex flex-col justify-start items-start">
-                  <div className="flex flex-row">
-                    <p>Cantilever</p>
-                    <p className="font-bold">{cantilever.external_id}</p>
-                  </div>
-                </div>
-              </div>
-            )
-          })}
+        <div className="col-span-2 row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 animation-group">
+          <label className="font-bold text-secondary-dark">Data</label>
         </div>
       </div>
     </Layout>

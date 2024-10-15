@@ -33,7 +33,7 @@ export interface CantileverParams {
     pole_id:number;
     via:string;
     via_id:number;
-    location_name:string;
+    location:string;
     location_id:number;
     user_id:number;
     created_by:string;
