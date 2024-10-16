@@ -8,6 +8,11 @@ import CantileverPage from './pages/cantilever.tsx';
 import HomePage from './pages/home.tsx';
 import CantileversPage from './pages/cantilevers.tsx';
 import Logout from './pages/logout.tsx';
+import ViasPage from './pages/vias.tsx';
+import ConfigPage from './pages/config.tsx';
+import ProfilePage from './pages/profile.tsx';
+import DroppersPage from './pages/droppers.tsx';
+import VanesPage from './pages/vanes.tsx';
 
 
 interface ProtectedRouteProps {
@@ -45,6 +50,10 @@ const AppRoutes: FC = () => {
         }
       />
 
+      <Route path="/vias" element={ <ProtectedRoute isAllowed={user != null && user != undefined}> <ViasPage/> </ProtectedRoute> } />
+      <Route path="/vanes" element={ <ProtectedRoute isAllowed={user != null && user != undefined}> <VanesPage/> </ProtectedRoute> } />
+
+
       <Route
         path="/cantilevers"
         element={
@@ -56,20 +65,17 @@ const AppRoutes: FC = () => {
         }
       />
 
-      <Route
-        path="/cantilever/:cantileverId"
-        element={
-          <ProtectedRoute
-            isAllowed={user != null && user != undefined}
-          >
-            <CantileverPage/>
-          </ProtectedRoute>
-        }
-      />
+      <Route path="/cantilever/:cantileverId" element={ <ProtectedRoute isAllowed={user != null && user != undefined} > <CantileverPage/> </ProtectedRoute> }/>
+      <Route path="/droppers" element={ <ProtectedRoute isAllowed={user != null && user != undefined}> <DroppersPage/> </ProtectedRoute> } />
+      <Route path="/config" element={ <ProtectedRoute isAllowed={user != null && user != undefined}> <ConfigPage/> </ProtectedRoute> } />
+      <Route path="/profile" element={ <ProtectedRoute isAllowed={user != null && user != undefined}> <ProfilePage/> </ProtectedRoute> } />
 
       <Route path="/signin" element={<ProtectedRoute  redirectPath="/dashboard" isAllowed={user == null || user == undefined}>
         <SignIn/>
       </ProtectedRoute>} />
+
+
+
 
       <Route path="/logout" element={<Logout />} />
 
