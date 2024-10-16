@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import CantileverViewer from "../components/CantileverViewer";
 import Layout from "../components/Layout";
 import GermanCantilever from "../models/cantilevers/GermanCantilever";
-import {CantileverParams} from "../types/cantilever";
 import {CantileversData} from "../models/cantilevers/data";
 import {useLocation, useNavigate} from "react-router-dom";
 import {ChevronLeftIcon} from "lucide-react";
@@ -38,23 +37,13 @@ const CantileverPage = () => {
         prevSelectedCantilever.cantilever.contact_wire_height,
         prevSelectedCantilever.cantilever.system_height,
         prevSelectedCantilever.cantilever.zig_zag,
-        prevSelectedCantilever.cantilever.upper_isolator_length,
-        prevSelectedCantilever.cantilever.bottom_isolator_length,
-        prevSelectedCantilever.cantilever.alpha_superior_tube,
-        prevSelectedCantilever.cantilever.alpha_registration_arm,
-        prevSelectedCantilever.cantilever.alpha_steady_arm,
         prevSelectedCantilever.cantilever.bitola,
         prevSelectedCantilever.cantilever.esc,
         prevSelectedCantilever.cantilever.pv,
-        prevSelectedCantilever.cantilever.wire_support_wire_to_tube_length,
-        prevSelectedCantilever.cantilever.wire_support_end_distance,
-        prevSelectedCantilever.cantilever.wire_support_to_eye_clamp_distance,
-        prevSelectedCantilever.cantilever.eye_clamp_eye_to_tube_length,
-        prevSelectedCantilever.cantilever.swivel_with_clevis_pole_to_pin_distance,
-        prevSelectedCantilever.cantilever.swivel_with_clevis_pin_to_fix_connection_length,
-        prevSelectedCantilever.cantilever.clevis_end_fitting_pin_to_tube_length,
-        prevSelectedCantilever.cantilever.cw_swivel_clip_holder,
-        prevSelectedCantilever.cantilever.steady_arm_end_point_distance,
+        prevSelectedCantilever.cantilever.stay_tube,
+        prevSelectedCantilever.cantilever.bracket_tube,
+        prevSelectedCantilever.cantilever.register_arm,
+        prevSelectedCantilever.cantilever.steady_arm
       );
 
       // Update the property with the new value

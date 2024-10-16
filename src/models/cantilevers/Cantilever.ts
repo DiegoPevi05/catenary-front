@@ -1,4 +1,4 @@
-import {Isolator} from "../../types/cantilever";
+import {ClevisEndFitting, Isolator, SwivelBracket, SwivelClevis} from "../../types/cantilever";
 
 class Cantilever {
   // Properties common to all cantilevers.
@@ -87,6 +87,15 @@ class Cantilever {
 
   getIsolatorUtilLength(isolator:Isolator):number{
     return isolator.eye_length - isolator.tube_length
+  }
+
+  getClevisEndFittingUtilLength(clevisEndFitting:ClevisEndFitting):number {
+    return clevisEndFitting.L - clevisEndFitting.a;
+  }
+
+  getSwivelClevisUtilLength(swivel_bracket:SwivelBracket, swivel_clevis:SwivelClevis){
+    return swivel_bracket.x_pin + swivel_clevis.pin_eye;
+
   }
 
   getMwAxis():{x:number,y:number}{

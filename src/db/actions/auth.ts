@@ -1,6 +1,5 @@
 import {toast} from 'sonner';
 import axios from 'axios';
-import { User,SignIn } from '../../types/user';
 import {serializeUser} from '../serializer/auth';
 
 export const SignInAccount = async (signInValues: SignIn, language:string): Promise<User|null> => {

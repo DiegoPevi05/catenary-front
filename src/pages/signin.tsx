@@ -7,7 +7,6 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import { SignInAccount } from "../db/actions/auth.ts";
 import { ZodError } from "zod";
-import {SignIn as SignInIT} from "../types/user";
 import {LOGO} from "../assets/images/index.ts";
 
 
@@ -24,7 +23,7 @@ const SignIn = () => {
 
   const [errorMessages, setErrorMessages] = useState<Record<string, string>>({});
 
-  const validateFields = (): SignInIT |null => {
+  const validateFields = ():SignIn|null  => {
       const form = document.getElementById("form_user_login") as HTMLFormElement;
       const email = (form.querySelector('input[name="email"]') as HTMLInputElement).value;
       const password = (form.querySelector('input[name="password"]') as HTMLInputElement).value;

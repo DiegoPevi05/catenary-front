@@ -1,28 +1,50 @@
-import { LOGO, CANTILEVER} from "../assets/images";
+import { LOGO} from "../assets/images";
 import {useLocation, useNavigate} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import {useAuth} from '../contexts/AuthContext';
+import SvgComponent from "./SvgComponent";
 
-const routes:{label:string, icon:string, category:string, filename:string, route:string}[] = [
+const routes:{label:string, icon:string, route:string}[] = [
   {
     label:"sidebar.dashboard",
-    icon:CANTILEVER,
-    category:"cantilevers",
-    filename:"cantilever",
+    icon:"dashboard",
     route:"/"
   },
   {
+    label:"Via",
+    icon:"via",
+    route:"/vias"
+  },
+  {
+    label:"Vanes",
+    icon:"vane",
+    route:"/vanes"
+  },
+  {
     label:"sidebar.cantilevers",
-    icon:CANTILEVER,
-    category:"cantilevers",
-    filename:"cantilever",
+    icon:"cantilever_gy_type_1",
     route:"/cantilevers"
+  },
+  {
+    label:"Droppers",
+    icon:"dropper",
+    route:"/droppers"
+  },
+  {
+    label:"Profile",
+    icon:"user",
+    route:"/profile"
+  },
+  {
+    label:"Config",
+    icon:"gear",
+    route:"/config"
   }
 ]
 
 interface propMenuButton {
   label:string;
-  icon:string
+  icon:string;
   active:boolean;
   route:string;
   goToRoute:(route:string) => void;
@@ -41,7 +63,7 @@ const MenuButton = (props:propMenuButton) => {
       hover:text-secondary-dark py-2
       ${active ? 'text-secondary-dark border-r-4 border-secondary-dark' : 'text-body' }`}>
       <div className="w-[40%] flex justify-center items-center group-active:scale-95 duration-300">
-        <img src={icon} alt={`icon-menu`}  className="h-10 w-10" style={{fill:'currentColor'}}/>
+        <SvgComponent icon={icon} className="" />
       </div>
       <div className="w-[60%] flex justify-start items-center group-active:scale-95 duration-300">
         <p className="font-bold">{t(label)}</p>
@@ -54,7 +76,7 @@ const MenuButton = (props:propMenuButton) => {
 const Sidebar = () => {
   const navigate  = useNavigate();
   const location = useLocation();
-  const {user, logout} = useAuth();
+  const {user} = useAuth();
   const {t} =  useTranslation();
 
   const goToRoute = (route:string) => {
@@ -86,6 +108,16 @@ const Sidebar = () => {
             goToRoute={goToRoute}
           />
         ))}
+        </div>
+        <div className="mt-auto w-full p-none m-none">
+          <MenuButton
+            key={`logout-btn`}
+            label="logout"
+            icon={"door_open"}
+            active={false}
+            route={"/logout"}
+            goToRoute={goToRoute}
+          />
       </div>
     </nav>
   );

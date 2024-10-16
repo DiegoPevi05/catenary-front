@@ -7,6 +7,7 @@ import "./lib/i18n.ts";
 import CantileverPage from './pages/cantilever.tsx';
 import HomePage from './pages/home.tsx';
 import CantileversPage from './pages/cantilevers.tsx';
+import Logout from './pages/logout.tsx';
 
 
 interface ProtectedRouteProps {
@@ -69,6 +70,8 @@ const AppRoutes: FC = () => {
       <Route path="/signin" element={<ProtectedRoute  redirectPath="/dashboard" isAllowed={user == null || user == undefined}>
         <SignIn/>
       </ProtectedRoute>} />
+
+      <Route path="/logout" element={<Logout />} />
 
     </Routes>
   )

@@ -2,13 +2,12 @@ import { useState, useEffect } from "react";
 import CantileverViewer from "../components/CantileverViewer";
 import Layout from "../components/Layout";
 import GermanCantilever from "../models/cantilevers/GermanCantilever";
-import {CantileverParams} from "../types/cantilever";
 import {CantileversData} from "../models/cantilevers/data";
 import CantileverCard from "../components/CantileverCard";
 import SearchBar from "../components/SearchBar";
 import {useLocation, useNavigate} from "react-router-dom";
 import Button from "../components/Button";
-import {Eye, PlusIcon} from "lucide-react";
+import {Eye} from "lucide-react";
 
 
 const CantileversPage = () => {
@@ -59,6 +58,8 @@ const CantileversPage = () => {
       state: { from: location.pathname }, // Pass the current route as `from`
     });
   };
+
+  console.log(cantilevers)
 
 
   return(

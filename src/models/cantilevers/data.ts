@@ -1,5 +1,3 @@
-import { CantileverParams} from "../../types/cantilever";
-
 export const CantileversData: CantileverParams[] = [
   {
     id:1,
@@ -132,10 +130,22 @@ export const CantileversData: CantileverParams[] = [
           operating_load:26.7,
           failing_operating_load:80,
           pin_eye:42
+        },
+        clevis_end_fitting:{
+          id:1,
+          order_id:"8WL6221-7",
+          designation:"Clevis end fitting 60.3",
+          weight:1.71,
+          operating_load:7.5,
+          failing_operating_load:22.5,
+          a:75,
+          d:62,
+          L:122
         }
       },
       steady_arm:{
         alpha:0,
+        end_distance:40,
         tube:{
           id:1,
           order_id:"8WL2175-0A",
