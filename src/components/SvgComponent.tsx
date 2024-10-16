@@ -44,7 +44,7 @@ const SvgComponent: React.FC<PropsSvgComponent> = ({ icon, className = '' }) => 
 
   return (
     <span className={className} style={{ display: 'inline-flex', color: 'inherit' }}>
-      <SelectedIcon width="51" height="41"/>
+      <SelectedIcon width="full" height="full"/>
     </span>
   );
 };

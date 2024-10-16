@@ -6,7 +6,7 @@
 	--white: #FFFFFF;
 	--body: #5C6C7B;
 	--gray-light: #E0E0E0;
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Poppins', sans-serif;
 }
 
 @tailwind base;
@@ -34,7 +34,7 @@ h4,
 h5,
 span,
 label {
-	font-family: 'Montserrat', sans-serif;
+	font-family: 'Poppins', sans-serif;
 }
 
 h1 {

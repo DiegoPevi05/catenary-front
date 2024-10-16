@@ -40,7 +40,7 @@ const CantileverCard = (props:CantileverCard) => {
 
   return(
     <>
-      <div onClick={onHandlerCantilever} key={`cantilever-${cantilever.id}-${index}`} className="border border-2 border-gray-light rounded-xl flex flex-row justify-start items-start w-full h-auto p-4 duration-300 hover:bg-primary group animation-element slide-in-up bg-white">
+      <div onClick={onHandlerCantilever} key={`cantilever-${cantilever.id}-${index}`} className="border border-2 border-gray-light rounded-xl flex flex-row justify-start items-start w-full h-auto p-4 duration-300 hover:bg-primary group animation-element slide-in-up bg-white cursor-pointer">
         <div className="w-24 h-full p-4 flex justify-center items-center group-active:scale-95 duration-300 text-body group-hover:text-white">
           <SvgComponent icon="cantilever_gy_type_1"/>
         </div>
@@ -99,7 +99,7 @@ const CantileverCard = (props:CantileverCard) => {
     </div>
     <Modal key={`modal-delete-${cantilever.id}`} isOpen={openDeleteModal} onClose={toggleDeleteModal}>
       <div  className="w-full h-auto flex flex-col items-center justify-center text-secondary p-12 gap-y-4">
-        <div className="w-24 h-full p-4 flex justify-center items-center active:scale-95 duration-300">
+        <div className="w-24 h-24 p-2 flex justify-center items-center active:scale-95 duration-300 text-body">
           <SvgComponent icon="cantilever_gy_type_1"/>
         </div>
         <p className="text-primary">Are you sure you want to delete this Cantilever</p>

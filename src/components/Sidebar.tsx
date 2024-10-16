@@ -11,12 +11,12 @@ const routes:{label:string, icon:string, route:string}[] = [
     route:"/"
   },
   {
-    label:"Via",
+    label:"sidebar.via",
     icon:"via",
     route:"/vias"
   },
   {
-    label:"Vanes",
+    label:"sidebar.vanes",
     icon:"vane",
     route:"/vanes"
   },
@@ -26,17 +26,17 @@ const routes:{label:string, icon:string, route:string}[] = [
     route:"/cantilevers"
   },
   {
-    label:"Droppers",
+    label:"sidebar.droppers",
     icon:"dropper",
     route:"/droppers"
   },
   {
-    label:"Profile",
+    label:"sidebar.profile",
     icon:"user",
     route:"/profile"
   },
   {
-    label:"Config",
+    label:"sidebar.config",
     icon:"gear",
     route:"/config"
   }
@@ -63,7 +63,7 @@ const MenuButton = (props:propMenuButton) => {
       hover:text-secondary-dark py-2
       ${active ? 'text-secondary-dark border-r-4 border-secondary-dark' : 'text-body' }`}>
       <div className="w-[40%] flex justify-center items-center group-active:scale-95 duration-300">
-        <SvgComponent icon={icon} className="" />
+        <SvgComponent icon={icon} className="h-12 w-12" />
       </div>
       <div className="w-[60%] flex justify-start items-center group-active:scale-95 duration-300">
         <p className="font-bold">{t(label)}</p>
@@ -112,7 +112,7 @@ const Sidebar = () => {
         <div className="mt-auto w-full p-none m-none">
           <MenuButton
             key={`logout-btn`}
-            label="logout"
+            label="sidebar.logout"
             icon={"door_open"}
             active={false}
             route={"/logout"}

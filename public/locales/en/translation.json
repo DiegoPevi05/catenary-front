@@ -18,6 +18,12 @@
 		"greeting": "Hello",
 		"welcome": "Welcome",
 		"dashboard": "Dashboard",
-		"cantilevers": "Cantilevers"
+		"cantilevers": "Cantilevers",
+		"via": "Vias",
+		"vanes": "Vanes",
+		"droppers": "Droppers",
+		"profile": "Profile",
+		"config": "Config",
+		"logout": "Log Out"
 	}
 }
