@@ -8,6 +8,9 @@ import SearchBar from "../components/SearchBar";
 import {useLocation, useNavigate} from "react-router-dom";
 import Button from "../components/Button";
 import {Eye} from "lucide-react";
+import SvgComponent from "../components/SvgComponent";
+import LoaderCantilever from "../components/loaders/CantileverLoader";
+import LoaderVane from "../components/loaders/VaneLoader";
 
 
 const CantileversPage = () => {
@@ -17,13 +20,6 @@ const CantileversPage = () => {
   const [cantilevers, setCantilevers] = useState<CantileverParams[]>(CantileversData);
   const [selectedCantilever, setSelectedCantilever] = useState<{ data:CantileverParams | null, cantilever:GermanCantilever | null  }>({data: null  , cantilever: null});
 
-  useEffect(()=>{
-    setSelectedCantilever(
-      { data: CantileversData[0], 
-        cantilever: GermanCantilever.deserialize(CantileversData[0].params)
-      }
-    )
-  },[])
 
   const handleSelectCantilever = (cantileverId:number) => {
     const searchedCantilever = CantileversData.find(cantilever => cantilever.id == cantileverId); 
@@ -94,37 +90,37 @@ const CantileversPage = () => {
             })}
           </div>
           <div className="col-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4">
-            <h5 className="font-bold text-secondary-dark">{`Cantilever: ${selectedCantilever.data?.external_id}`}</h5>
-            { 
-              selectedCantilever &&
-              selectedCantilever.cantilever &&
-              selectedCantilever.data  &&
-              (
+            {selectedCantilever.data == null || selectedCantilever.cantilever == null ?
+              <div className="w-full h-full flex flex-col justify-center items-center text-primary">
+                <LoaderVane className="h-96 w-96"/>
+                <p className="text-center text-body w-full px-24">{"Currently there is not cantilever selected, please select one"}</p>
+              </div>
+            :
+            <>
+              <h5 className="font-bold text-secondary-dark">{`Cantilever: ${selectedCantilever.data?.external_id}`}</h5>
+              <div className="w-full h-[300px] flex flex-col justify-start items-start p-4">
+                  <CantileverViewer cantilever={selectedCantilever.cantilever}/>
+              </div>
+              <div className="w-full h-auto grid grid-cols-2 gap-4">
+                <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
+                  <p className="font-bold text-xs">Contact Wire</p>
+                  <span className="border-b-2 border-b-primary focus:outline-none w-full px-2">
+                    {selectedCantilever.cantilever?.contact_wire_height}
+                  </span>
+                </div>
 
-                <>
-                  <div className="w-full h-[300px] flex flex-col justify-start items-start p-4">
-                      <CantileverViewer cantilever={selectedCantilever.cantilever}/>
-                  </div>
-                  <div className="w-full h-auto grid grid-cols-2 gap-4">
-                    <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-                      <p className="font-bold text-xs">Contact Wire</p>
-                      <span className="border-b-2 border-b-primary focus:outline-none w-full px-2">
-                        {selectedCantilever.cantilever?.contact_wire_height}
-                      </span>
-                    </div>
-
-                    <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-                      <p className="font-bold text-xs">System Height</p>
-                      <span className="border-b-2 border-b-primary focus:outline-none w-full px-2">
-                        {selectedCantilever.cantilever?.system_height}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="w-full h-auto flex flex-row justify-end">
-                    <Button onClick={()=>handleClickCantilever(selectedCantilever.data.id)} rightIcon={<Eye/>} size="sm" className="h-full font-bold text-nowrap">{"See Details"}</Button>
-                  </div>
-                </>
-              )
+                <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
+                  <p className="font-bold text-xs">System Height</p>
+                  <span className="border-b-2 border-b-primary focus:outline-none w-full px-2">
+                    {selectedCantilever.cantilever?.system_height}
+                  </span>
+                </div>
+              </div>
+              <div className="w-full h-auto flex flex-row justify-end">
+                {/*@ts-ignore*/}
+                <Button onClick={()=>handleClickCantilever(selectedCantilever.data.id)} rightIcon={<Eye/>} size="sm" className="h-full font-bold text-nowrap">{"See Details"}</Button>
+              </div>
+            </>
             }
           </div>
         </div>

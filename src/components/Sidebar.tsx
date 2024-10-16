@@ -97,7 +97,7 @@ const Sidebar = () => {
           {t('sidebar.welcome')}
         </p>
       </div>
-      <div className="w-full h-auto flex flex-col justify-start items-start gap-y-4">
+      <div className="w-full h-auto flex flex-col justify-start items-start gap-y-none">
         {routes.map((item,index)=>(
           <MenuButton
             key={`key-menu-button-${index}`}
@@ -108,16 +108,16 @@ const Sidebar = () => {
             goToRoute={goToRoute}
           />
         ))}
-        </div>
-        <div className="mt-auto w-full p-none m-none">
-          <MenuButton
-            key={`logout-btn`}
-            label="sidebar.logout"
-            icon={"door_open"}
-            active={false}
-            route={"/logout"}
-            goToRoute={goToRoute}
-          />
+      </div>
+      <div className="mt-auto w-full p-none m-none">
+        <MenuButton
+          key={`logout-btn`}
+          label="sidebar.logout"
+          icon={"door_open"}
+          active={false}
+          route={"/logout"}
+          goToRoute={goToRoute}
+        />
       </div>
     </nav>
   );
