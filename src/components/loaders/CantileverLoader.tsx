@@ -1,7 +1,11 @@
-const LoaderCantilever = ({className=''}) => {
+import {useTranslation} from "react-i18next";
+
+const LoaderCantilever = ({noLabel=false,className=''}) => {
+  const {t} = useTranslation();
+
   return(
-    <span className={className} style={{ display: 'inline-flex', color: 'inherit' }}>
-      <svg width="full" height="full" viewBox="0 0 51 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <span className={`${className} flex flex-col justify-center items-center relative`} style={{ color: 'inherit' }}>
+      <svg width="100%" height="100%"  viewBox="0 0 51 51" fill="none" xmlns="http://www.w3.org/2000/svg">
       <line x1="0.706299" y1="4.07714" x2="46.2099" y2="4.07714" stroke="currentColor"/>
       <line x1="0.364692" y1="36.4411" x2="33.3725" y2="5.39179" stroke="currentColor"/>
       <line x1="41.9387" y1="4.57714" x2="41.9387" y2="1.04059" stroke="currentColor"/>
@@ -15,6 +19,13 @@ const LoaderCantilever = ({className=''}) => {
       <path d="M0 3.16252H1.17885C1.96012 3.16252 2.59347 3.79587 2.59347 4.57714C2.59347 5.35841 1.96012 5.99176 1.17885 5.99176H0V3.16252Z" fill="currentColor"/>
 
         <g className="rotate-group" transform-origin="5.99209px 31.7871px">
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            values="0; 5; 0; -5; 0"
+            dur="2s"
+            repeatCount="indefinite"
+          />
           <line x1="7.87825" y1="33.909" x2="5.99209" y2="31.7871" stroke="currentColor"/>
           <line x1="8.28683" y1="33.0781" x2="42.6254" y2="35.4793" stroke="currentColor"/>
           <line x1="42.0564" y1="38.5334" x2="42.0564" y2="35.9292" stroke="currentColor"/>
@@ -25,6 +36,9 @@ const LoaderCantilever = ({className=''}) => {
           <ellipse cx="42.4564" cy="38.4101" rx="0.825195" ry="0.825195" fill="currentColor"/>
         </g>
       </svg>
+      {noLabel && 
+        <p className="font-bold relative">{t("common.loading")}</p>
+      }
     </span>
   )
 }

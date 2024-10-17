@@ -1,3 +1,24 @@
+export const OptionsCantileverData:{ id:number, model:{ code:"GY"|"ES"|"FR", name:string }, type: 'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA', icon:string }[] = [
+  {
+    id:1,
+    model:{
+      code:"GY",
+      name:"German"
+    },
+    type:"TDP<2.2",
+    icon:'cantilever_gy_type_1',
+  },
+  {
+    id:2,
+    model:{
+      code:"GY",
+      name:"German"
+    },
+    type:"CAI",
+    icon:'cantilever_gy_type_2',
+  }
+];
+
 export const CantileversData: CantileverParams[] = [
   {
     id:1,
@@ -141,7 +162,17 @@ export const CantileversData: CantileverParams[] = [
           a:75,
           d:62,
           L:122
-        }
+        },
+        eye_clamp:{
+          id:1,
+          order_id:"8WL2114-7",
+          designation:"Eye clamp 60.3",
+          weight:1.10,
+          operating_load:5, //Kilo Newtons
+          failing_operating_load:15,//Kilo Newtons
+          h:73,//mm
+          d:60.3//mm
+        },
       },
       steady_arm:{
         alpha:0,
@@ -154,16 +185,6 @@ export const CantileversData: CantileverParams[] = [
           max_delivery_length:7,
           d:26.9,
           s:3.6
-        },
-        eye_clamp:{
-          id:1,
-          order_id:"8WL2114-7",
-          designation:"Eye clamp 60.3",
-          weight:1.10,
-          operating_load:5, //Kilo Newtons
-          failing_operating_load:15,//Kilo Newtons
-          h:73,//mm
-          d:60.3//mm
         },
         hook_end_fitting:{
           id:1,

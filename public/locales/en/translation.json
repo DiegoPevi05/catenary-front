@@ -1,4 +1,7 @@
 {
+	"common": {
+		"loading": "Loading"
+	},
 	"auth": {
 		"signin": {
 			"header": "Log In",

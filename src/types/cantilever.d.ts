@@ -100,8 +100,10 @@ declare global{
     cw_angle:number;//mm
   }
 
+  export type TypeCantilever = 'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA';
+
   export interface CantileverGermanParams {
-    type: 'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA';
+    type: TypeCantilever;
     contact_wire_height: number;
     system_height: number;
     zig_zag: number;
@@ -127,6 +129,7 @@ declare global{
       swivel_bracket:SwivelBracket;
       swivel_clevis:SwivelClevis;
       clevis_end_fitting:ClevisEndFitting;
+      eye_clamp:EyeClamp;
     },
     register_arm:{
       alpha:number;
@@ -136,11 +139,12 @@ declare global{
       alpha:number;
       tube:SteelTube;
       end_distance:number;
-      eye_clamp:EyeClamp;
       hook_end_fitting:HookEndFitting;
       swivel_clip:SwivelClip;
     }
   }
+
+  export type ModelCode = "GY"|"ES"|"FR";
 
   export interface CantileverParams {
       id:number;
@@ -154,7 +158,7 @@ declare global{
       user_id:number;
       created_by:string;
       model:{
-        code:"GY"|"ES"|"FR",
+        code:ModelCode,
         name:string;
       }
       params:CantileverGermanParams;

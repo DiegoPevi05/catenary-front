@@ -1,4 +1,3 @@
-import {ClevisEndFitting, Isolator, SwivelBracket, SwivelClevis} from "../../types/cantilever";
 
 class Cantilever {
   // Properties common to all cantilevers.

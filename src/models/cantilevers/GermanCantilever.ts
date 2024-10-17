@@ -23,6 +23,7 @@ class CantileverGerman extends Cantilever {
     swivel_bracket:SwivelBracket;
     swivel_clevis:SwivelClevis;
     clevis_end_fitting:ClevisEndFitting;
+    eye_clamp:EyeClamp;
   };
   register_arm:{
     alpha:number;
@@ -32,7 +33,6 @@ class CantileverGerman extends Cantilever {
     alpha:number;
     end_distance:number;
     tube:SteelTube;
-    eye_clamp:EyeClamp;
     hook_end_fitting:HookEndFitting;
     swivel_clip:SwivelClip;
   };
@@ -65,6 +65,7 @@ class CantileverGerman extends Cantilever {
       swivel_bracket:SwivelBracket;
       swivel_clevis:SwivelClevis;
       clevis_end_fitting:ClevisEndFitting;
+      eye_clamp:EyeClamp;
     },
     register_arm:{
       alpha:number;
@@ -74,7 +75,6 @@ class CantileverGerman extends Cantilever {
       alpha:number;
       end_distance:number;
       tube:SteelTube;
-      eye_clamp:EyeClamp;
       hook_end_fitting:HookEndFitting;
       swivel_clip:SwivelClip;
     }
@@ -243,7 +243,7 @@ class CantileverGerman extends Cantilever {
 
     let internal_angle = bottom_left_angle + this.steady_arm.alpha;
 
-    let length_fixed_point = this.steady_arm.eye_clamp.h/Math.tan(this.radiansToDegress(internal_angle))
+    let length_fixed_point = this.bracket_tube.eye_clamp.h/Math.tan(this.radiansToDegress(internal_angle))
 
     let x_axis =  this.getIntersectionPoint().x + length_fixed_point * Math.cos(this.degreesToRadians(360 + bottom_left_angle));
 
@@ -257,7 +257,7 @@ class CantileverGerman extends Cantilever {
 
     let internal_angle = bottom_left_angle + this.steady_arm.alpha;
 
-    let length_fixed_point = this.steady_arm.eye_clamp.h/Math.sin(this.radiansToDegress(internal_angle))
+    let length_fixed_point = this.bracket_tube.eye_clamp.h/Math.sin(this.radiansToDegress(internal_angle))
 
     let x_axis =  this.getIntersectionPoint().x + length_fixed_point * Math.cos(this.degreesToRadians(360 + this.steady_arm.alpha));
 

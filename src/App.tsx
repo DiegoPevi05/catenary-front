@@ -13,6 +13,7 @@ import ConfigPage from './pages/config.tsx';
 import ProfilePage from './pages/profile.tsx';
 import DroppersPage from './pages/droppers.tsx';
 import VanesPage from './pages/vanes.tsx';
+import NotFoundPage from './pages/404.tsx';
 
 
 interface ProtectedRouteProps {
@@ -76,7 +77,7 @@ const AppRoutes: FC = () => {
 
 
 
-
+      <Route path="/404" element={<NotFoundPage />} />
       <Route path="/logout" element={<Logout />} />
 
     </Routes>

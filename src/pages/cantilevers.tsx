@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import CantileverViewer from "../components/CantileverViewer";
 import Layout from "../components/Layout";
 import GermanCantilever from "../models/cantilevers/GermanCantilever";
@@ -8,18 +8,18 @@ import SearchBar from "../components/SearchBar";
 import {useLocation, useNavigate} from "react-router-dom";
 import Button from "../components/Button";
 import {Eye} from "lucide-react";
-import SvgComponent from "../components/SvgComponent";
 import LoaderCantilever from "../components/loaders/CantileverLoader";
-import LoaderVane from "../components/loaders/VaneLoader";
+import {toast} from "sonner";
+import {useTranslation} from "react-i18next";
 
 
 const CantileversPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const {t} = useTranslation();
 
   const [cantilevers, setCantilevers] = useState<CantileverParams[]>(CantileversData);
   const [selectedCantilever, setSelectedCantilever] = useState<{ data:CantileverParams | null, cantilever:GermanCantilever | null  }>({data: null  , cantilever: null});
-
 
   const handleSelectCantilever = (cantileverId:number) => {
     const searchedCantilever = CantileversData.find(cantilever => cantilever.id == cantileverId); 
@@ -50,18 +50,20 @@ const CantileversPage = () => {
 
 
   const handleClickCantilever = (cantileverId: number) => {
+    const cantilever = cantilevers.find(ctlv => ctlv.id == cantileverId)
+    if(!cantilever){
+      toast.error(t("cantilevers.not_found"))
+    }
     navigate(`/cantilever/${cantileverId}`, {
-      state: { from: location.pathname }, // Pass the current route as `from`
+      state: { from: location.pathname, cantilever }, // Pass the current route as `from`
     });
   };
-
-  console.log(cantilevers)
 
 
   return(
       <Layout>
         <div className="h-full w-full grid grid-cols-3 gap-4">
-          <div className="col-span-2 row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 animation-group">
+          <div className="col-span-2 row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 animation-group shadow-sm">
             <div className="w-auto h-auto flex flex-row justify-start items-center gap-x-4">
               <h4 className="font-bold text-body">Cantilevers</h4>
               <span className="bg-body text-white rounded-full h-8 w-8 font-bold flex items-center justify-center">
@@ -89,10 +91,10 @@ const CantileversPage = () => {
               )
             })}
           </div>
-          <div className="col-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4">
+          <div className="col-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 shadow-sm">
             {selectedCantilever.data == null || selectedCantilever.cantilever == null ?
               <div className="w-full h-full flex flex-col justify-center items-center text-primary">
-                <LoaderVane className="h-96 w-96"/>
+                <LoaderCantilever className="h-56 w-56"/>
                 <p className="text-center text-body w-full px-24">{"Currently there is not cantilever selected, please select one"}</p>
               </div>
             :

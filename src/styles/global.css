@@ -446,83 +446,29 @@ caption {
 }
 
 
-/**********************************Loaders*******************/
-.rotate-group {
-	transform-origin: 5.99209px 31.7871px;
-	animation: rotate-around-endpoint 0.8s linear infinite;
+.no-scroll-bar::-webkit-scrollbar {
+	display: none;
 }
 
-@keyframes rotate-around-endpoint {
-	0% {
-		transform: rotate(0deg);
-	}
-
-	25% {
-		transform: rotate(5deg);
-	}
-
-	50% {
-		transform: rotate(0deg);
-	}
-
-	75% {
-		transform: rotate(-5deg);
-	}
-
-	100% {
-		transform: rotate(0deg);
-	}
+::-webkit-scrollbar {
+	width: 4px;
+	height: 4px;
+	/* Width of the scrollbar */
 }
 
-.animated-paths path,
-.animated-paths line {
-	fill: none;
-	stroke-width: 1;
-	stroke-dasharray: 100;
-	stroke-dashoffset: 100;
-	animation: draw 2s linear forwards;
+/* Style the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+	background-color: var(--primary-color);
+	/* Color of the scrollbar handle */
+	border-radius: 8px;
+	/* Rounded corners */
+	border: 2px solid var(--primary-color);
+	/* Space around the handle */
 }
 
-/* Sequential animations with delays */
-.path1 {
-	animation-delay: 0s;
-}
-
-.path2 {
-	animation-delay: 2s;
-}
-
-.path3 {
-	animation-delay: 4s;
-}
-
-.path4 {
-	animation-delay: 6s;
-}
-
-.path5 {
-	animation-delay: 8s;
-}
-
-@keyframes draw {
-	to {
-		stroke-dashoffset: 0;
-	}
-}
-
-/* Line animations after the path animations */
-.animated-lines line {
-	fill: none;
-	stroke-width: 1;
-	stroke-dasharray: 100;
-	stroke-dashoffset: 100;
-	animation: draw-line 2s linear forwards;
-	animation-delay: 10s;
-	/* Start after all paths are done */
-}
-
-@keyframes draw-line {
-	to {
-		stroke-dashoffset: 0;
-	}
+/* Style the scrollbar on hover */
+::-webkit-scrollbar-thumb:hover {
+	background: var(--primary-color-dark);
+	border: 2px solid var(--primary-color-dark);
+	/* Darker color on hover */
 }

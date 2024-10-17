@@ -11,7 +11,7 @@ const Layout = (props:propsLayout) => {
 
   return(
     <div className="w-screen h-screen grid grid-cols-5 grid-rows-1 gap-6 p-6">
-      <div className="col-span-1 border-gray-light border-2 rounded-xl py-4 shadow-xl">
+      <div className="col-span-1 border-gray-light border-2 rounded-xl py-4 shadow-sm">
         <Sidebar/>
       </div>
       <div className="col-span-4">
