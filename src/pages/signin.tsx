@@ -2,7 +2,8 @@ import { useState, FormEvent } from "react";
 import Button from "../components/Button";
 import { signInSchema } from "../lib/schemas";
 import { useLocation, useNavigate } from "react-router-dom";
-import {  Eye, EyeOff } from "lucide-react";
+import Eye from "../assets/images/svg/common/eye.svg?react"
+import EyeOff from "../assets/images/svg/common/eye-off.svg?react"
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import { SignInAccount } from "../db/actions/auth.ts";
@@ -107,7 +108,7 @@ const SignIn = () => {
             <label htmlFor="password" className="text-body h-3 sm:h-6 capitalize">{t("auth.signin.password")}</label>
             <div className="h-auto w-full relative">
               <input name="password" type={showPassword ? "text" : "password"} className="relative w-full h-8 sm:h-10 px-2 border-b-2 border-secondary focus:outline-none focus:border-b-2 focus:border-b-primary" placeholder={t("auth.signin.password")}/>
-              <div onClick={()=>setShowPassword(!showPassword)} className="absolute top-0 right-2 h-full w-8 flex justify-center items-center cursor-pointer z-50 text-body">{ showPassword ? <EyeOff/> : <Eye />} </div>
+              <div onClick={()=>setShowPassword(!showPassword)} className="absolute top-0 right-2 h-full w-8 flex justify-center items-center cursor-pointer z-50 text-body">{ showPassword ? <EyeOff className="h-6 w-6"/> : <Eye className="h-6 w-6" />} </div>
             </div>
             <div className="w-full h-6">
               <p id="error-message-password" className="h-6 text-[10px] sm:text-xs text-secondary-dark animation-element">

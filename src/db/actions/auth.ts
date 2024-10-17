@@ -1,10 +1,13 @@
 import {toast} from 'sonner';
 import axios from 'axios';
-import {serializeUser} from '../serializer/auth';
+//import {serializeUser} from '../serializer/auth';
 
 export const SignInAccount = async (signInValues: SignIn, language:string): Promise<User|null> => {
 
   let user: User | null = null;
+
+  console.log(signInValues);
+  console.log(language)
 
   try {
       //const loginResponse = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/signin`, signInValues, {

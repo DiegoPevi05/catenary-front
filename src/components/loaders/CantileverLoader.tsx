@@ -36,7 +36,7 @@ const LoaderCantilever = ({noLabel=false,className=''}) => {
           <ellipse cx="42.4564" cy="38.4101" rx="0.825195" ry="0.825195" fill="currentColor"/>
         </g>
       </svg>
-      {noLabel && 
+      {!noLabel && 
         <p className="font-bold relative">{t("common.loading")}</p>
       }
     </span>

@@ -1,10 +1,10 @@
-import GermanCantilever from "../models/cantilevers/GermanCantilever";
-import ChevronDown from "../assets/images/svg/common/chevron-down.svg?react";
-import ChevronUp from "../assets/images/svg/common/chevron-up.svg?react";
+import GermanCantilever from "../../models/cantilevers/GermanCantilever";
+import ChevronDown from "../../assets/images/svg/common/chevron-down.svg?react";
+import ChevronUp from "../../assets/images/svg/common/chevron-up.svg?react";
 import {useState} from "react";
 import {useTranslation} from "react-i18next";
-import SvgComponent from "./SvgComponent";
-import { OptionsCantileverData } from "../models/cantilevers/data";
+import SvgComponent from "../SvgComponent";
+import { OptionsCantileverData } from "../../models/cantilevers/data";
 
 interface PropsCantileverSelector {
   options:{ id:number, model:{ code:ModelCode, name:string }, type: TypeCantilever, icon:string }[];

@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import CantileverViewer from "../components/CantileverViewer";
+import CantileverViewer from "../components/cantilevers/CantileverViewer";
 import Model3D from "../assets/images/svg/common/3d.svg?react";
 import Model2D from "../assets/images/svg/common/2d.svg?react";
 import Layout from "../components/Layout";
 import GermanCantilever from "../models/cantilevers/GermanCantilever";
 import {useLocation, useNavigate} from "react-router-dom";
-import {ChevronLeftIcon} from "lucide-react";
-import CantileverForm from "../components/CantileverForm";
+import ChevronLeftIcon from '../assets/images/svg/common/chevron-left.svg?react'
+
+import CantileverForm from "../components/cantilevers/CantileverForm";
+import CantileverResults from "../components/cantilevers/CantileverResults";
 
 
 const CantileverPage = () => {
@@ -57,8 +59,6 @@ const CantileverPage = () => {
       updatedCantilever.model.name = name;
       updatedCantilever.params.type = type;
 
-      console.log("this is executed")
-      console.log(updatedCantilever)
       return {
         data:updatedCantilever,
         cantilever: GermanCantilever.deserialize(updatedCantilever.params)
@@ -129,8 +129,11 @@ const CantileverPage = () => {
             <CantileverForm external_id={selectedCantilever.data.external_id} model={selectedCantilever.data.model} handleChange={handleChange} cantilever={selectedCantilever.cantilever} handleChangeType={handleChangeType}/>
           }
         </div>
-        <div className="col-span-2 row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 animation-group">
-          <label className="font-bold text-secondary-dark">Data</label>
+        <div className="col-span-2 row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start gap-y-4 animation-group py-4">
+
+          {selectedCantilever.cantilever && 
+            <CantileverResults cantilever={selectedCantilever.cantilever}/>
+          }
         </div>
       </div>
     </Layout>

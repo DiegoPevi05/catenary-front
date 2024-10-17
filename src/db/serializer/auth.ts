@@ -1,5 +1,3 @@
-import { User } from "../../types/user";
-
 export const serializeUser = (data:any):User|null => {
   let user:User | null = null;
 

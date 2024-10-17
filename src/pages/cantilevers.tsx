@@ -1,9 +1,9 @@
 import { useState } from "react";
-import CantileverViewer from "../components/CantileverViewer";
+import CantileverViewer from "../components/cantilevers/CantileverViewer";
 import Layout from "../components/Layout";
 import GermanCantilever from "../models/cantilevers/GermanCantilever";
 import {CantileversData} from "../models/cantilevers/data";
-import CantileverCard from "../components/CantileverCard";
+import CantileverCard from "../components/cantilevers/CantileverCard";
 import SearchBar from "../components/SearchBar";
 import {useLocation, useNavigate} from "react-router-dom";
 import Button from "../components/Button";
@@ -18,7 +18,7 @@ const CantileversPage = () => {
   const location = useLocation();
   const {t} = useTranslation();
 
-  const [cantilevers, setCantilevers] = useState<CantileverParams[]>(CantileversData);
+  const [cantilevers, _] = useState<CantileverParams[]>(CantileversData);
   const [selectedCantilever, setSelectedCantilever] = useState<{ data:CantileverParams | null, cantilever:GermanCantilever | null  }>({data: null  , cantilever: null});
 
   const handleSelectCantilever = (cantileverId:number) => {
@@ -94,7 +94,7 @@ const CantileversPage = () => {
           <div className="col-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 shadow-sm">
             {selectedCantilever.data == null || selectedCantilever.cantilever == null ?
               <div className="w-full h-full flex flex-col justify-center items-center text-primary">
-                <LoaderCantilever className="h-56 w-56"/>
+                <LoaderCantilever noLabel={true} className="h-56 w-56"/>
                 <p className="text-center text-body w-full px-24">{"Currently there is not cantilever selected, please select one"}</p>
               </div>
             :

@@ -1,4 +1,4 @@
-import {Home} from "lucide-react";
+import Home from "../assets/images/svg/common/home.svg?react";
 import Button from "../components/Button";
 import LoaderVane from "../components/loaders/VaneLoader";
 import {useNavigate} from "react-router-dom";

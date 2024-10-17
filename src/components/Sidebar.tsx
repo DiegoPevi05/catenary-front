@@ -4,41 +4,48 @@ import {useTranslation} from 'react-i18next';
 import {useAuth} from '../contexts/AuthContext';
 import SvgComponent from "./SvgComponent";
 
-const routes:{label:string, icon:string, route:string}[] = [
+const routes:{label:string, icon:string, route:string, subroutes:string[]}[] = [
   {
     label:"sidebar.dashboard",
     icon:"dashboard",
-    route:"/"
+    route:"/",
+    subroutes:[],
   },
   {
     label:"sidebar.via",
     icon:"via",
-    route:"/vias"
+    route:"/vias",
+    subroutes:[],
   },
   {
     label:"sidebar.vanes",
     icon:"vane",
-    route:"/vanes"
+    route:"/vanes",
+    subroutes:[],
   },
   {
     label:"sidebar.cantilevers",
     icon:"cantilever_gy_type_1",
-    route:"/cantilevers"
+    route:"/cantilevers",
+    subroutes:["/cantilever"]
   },
   {
     label:"sidebar.droppers",
     icon:"dropper",
-    route:"/droppers"
+    route:"/droppers",
+    subroutes:[],
   },
   {
     label:"sidebar.profile",
     icon:"user",
-    route:"/profile"
+    route:"/profile",
+    subroutes:[],
   },
   {
     label:"sidebar.config",
     icon:"gear",
-    route:"/config"
+    route:"/config",
+    subroutes:[]
   }
 ]
 
@@ -78,6 +85,7 @@ const Sidebar = () => {
   const location = useLocation();
   const {user} = useAuth();
   const {t} =  useTranslation();
+  console.log(location.pathname);
 
   const goToRoute = (route:string) => {
     navigate(route)
@@ -103,7 +111,7 @@ const Sidebar = () => {
             key={`key-menu-button-${index}`}
             label={item.label}
             icon={item.icon}
-            active={location.pathname === item.route}
+            active={location.pathname === item.route ||  item.subroutes.some(subroute => location.pathname.startsWith(subroute))}
             route={item.route}
             goToRoute={goToRoute}
           />

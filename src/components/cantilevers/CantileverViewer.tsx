@@ -1,7 +1,7 @@
 import { Fragment } from "react/jsx-runtime";
 import { Canvas } from "@react-three/fiber";
 import { Line, OrthographicCamera, Text } from "@react-three/drei";
-import GermanCantilever from "../models/cantilevers/GermanCantilever";
+import GermanCantilever from "../../models/cantilevers/GermanCantilever";
 import * as THREE from 'three';
 
 interface CantileverViewerProps{

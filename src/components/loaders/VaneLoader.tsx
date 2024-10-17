@@ -118,8 +118,8 @@ const LoaderVane = ({noLabel=false,className=''}) => {
           </line>
         </g>
       </svg>
-      {noLabel && 
-        <p className="font-bold relative bottom-12">{t("common.loading")}</p>
+      {!noLabel && 
+        <p className="font-bold relative">{t("common.loading")}</p>
       }
     </span>
   )

@@ -1,8 +1,8 @@
 import {CircleX, DownloadIcon, Eye} from "lucide-react";
 import {useCallback, useState} from "react";
-import Modal from "./Modal";
-import Button from "./Button";
-import SvgComponent from "./SvgComponent";
+import Modal from "../Modal";
+import Button from "../Button";
+import SvgComponent from "../SvgComponent";
 
 interface CantileverCard {
   cantilever:CantileverParams;
