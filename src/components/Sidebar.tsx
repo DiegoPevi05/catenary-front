@@ -70,7 +70,7 @@ const MenuButton = (props:propMenuButton) => {
       hover:text-secondary-dark py-2
       ${active ? 'text-secondary-dark border-r-4 border-secondary-dark' : 'text-body' }`}>
       <div className="w-[40%] flex justify-center items-center group-active:scale-95 duration-300">
-        <SvgComponent icon={icon} className="h-12 w-12" />
+        <SvgComponent icon={icon} className="h-10 w-10" />
       </div>
       <div className="w-[60%] flex justify-start items-center group-active:scale-95 duration-300">
         <p className="font-bold">{t(label)}</p>

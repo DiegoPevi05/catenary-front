@@ -202,7 +202,7 @@ const CantileverForm = (props:CantileverFormProps) => {
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
               value={cantilever.steady_arm.alpha}
-              onChange={(e) => handleChange('params.stay_tube.alpha', parseFloat(e.target.value))}
+              onChange={(e) => handleChange('params.steady_arm.alpha', parseFloat(e.target.value))}
             />
           </div>
         </SectionForm>

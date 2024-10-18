@@ -1,4 +1,7 @@
-import {Search, PlusIcon, Filter} from "lucide-react"
+import Search from "../assets/images/svg/common/search.svg?react";
+import PlusIcon from "../assets/images/svg/common/plus.svg?react";
+import Filter from "../assets/images/svg/common/filter.svg?react";
+
 import Button from "./Button"
 import {useCallback, useState} from "react";
 import {useTranslation} from "react-i18next";
@@ -25,13 +28,13 @@ const DropDownComponent = (props:propsDropDown) => {
 
   return(
     <div className="min-w-36 w-auto px-4 h-full py-1 bg-primary relative flex items-center justify-center text-white rounded-xl border-2 hover:border-white hover:bg-primary-dark cursor-pointer active:scale-95 duration-300 z-[50]" onClick={toggleShow}>
-      <label className="inline-flex gap-x-2 cursor-pointer font-bold">{currentStatus.label} <Filter/></label>
+      <label className="inline-flex gap-x-2 cursor-pointer font-bold">{currentStatus.label} <Filter className="w-5 h-5"/></label>
       {show && 
         <div 
-          className="absolute top-full w-auto h-auto flex flex-col mt-2 z-[50] border-2 border-gray-light rounded-xl">
+          className="absolute top-full w-full h-auto flex flex-col mt-2 z-[50] border-2 border-gray-light rounded-xl">
           {options.map((option,index)=> {
             return(
-              <span onClick={()=>onClickOption(option.value,option.label)}  key={`option_${currentStatus.value}_${index}`} className={`w-auto px-4 py-1 bg-white text-secondary-dark  inline-flex items-center justify-center hover:bg-secondary-dark hover:text-white duration-300 ${ index == 0 ? "rounded-t-xl " : "" } ${index == options.length -1 ? "rounded-b-xl" : "" }`}>{t(option.label)}</span>
+              <span onClick={()=>onClickOption(option.value,option.label)}  key={`option_${currentStatus.value}_${index}`} className={`w-auto px-4 py-2 bg-white text-secondary-dark  inline-flex items-center justify-center hover:bg-secondary-dark hover:text-white duration-300 ${ index == 0 ? "rounded-t-xl " : "" } ${index == options.length -1 ? "rounded-b-xl" : "" }`}>{t(option.label)}</span>
             )
           })}
         </div>
@@ -70,11 +73,11 @@ const SearchBar = (props:propsSearchBar) => {
       <div className="w-full h-auto flex flex-row border-2 border-gray-light rounded-lg ps-2 text-body">
         <input name="value_search" className="w-full focus:outline-none py-3" placeholder={input_placeholder}/>
         <button onClick={handleOnSearch} className="rounded-lg px-3 py-3 duration-300 hover:bg-gray-100 active:scale-95 group">
-          <Search className="group-active:scale-95"/>
+          <Search className="group-active:scale-95 w-5 h-5"/>
         </button>
       </div>
       <DropDownComponent currentStatus={selectedFitler} options={filters} handleChangeOption={hanldeUpdateSelectedFilter} />
-      <Button onClick={btnAction} rightIcon={<PlusIcon/>} size="sm" className="h-full font-bold text-nowrap">{btnLabel}</Button>
+      <Button onClick={btnAction} rightIcon={<PlusIcon className="w-5 h-5"/>} size="sm" className="h-full font-bold text-nowrap">{btnLabel}</Button>
     </div>
   )
 }

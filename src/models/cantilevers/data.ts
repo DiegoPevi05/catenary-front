@@ -175,7 +175,7 @@ export const CantileversData: CantileverParams[] = [
         },
       },
       steady_arm:{
-        alpha:0,
+        alpha:-4,
         end_distance:40,
         tube:{
           id:1,

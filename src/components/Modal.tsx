@@ -1,5 +1,5 @@
 import React from "react";
-import { X } from "lucide-react";
+import X from "../assets/images/svg/common/x.svg?react"
 
 interface ModalProps {
   isOpen: boolean;

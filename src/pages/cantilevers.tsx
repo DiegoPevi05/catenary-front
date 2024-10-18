@@ -7,7 +7,7 @@ import CantileverCard from "../components/cantilevers/CantileverCard";
 import SearchBar from "../components/SearchBar";
 import {useLocation, useNavigate} from "react-router-dom";
 import Button from "../components/Button";
-import {Eye} from "lucide-react";
+import Eye from "../assets/images/svg/common/eye.svg?react"
 import LoaderCantilever from "../components/loaders/CantileverLoader";
 import {toast} from "sonner";
 import {useTranslation} from "react-i18next";

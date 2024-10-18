@@ -1,4 +1,8 @@
-import {CircleX, DownloadIcon, Eye} from "lucide-react";
+
+import Eye from "../../assets/images/svg/common/eye.svg?react"
+import CircleX from "../../assets/images/svg/common/circle-x.svg?react"
+import DownloadIcon from "../../assets/images/svg/common/download.svg?react"
+
 import {useCallback, useState} from "react";
 import Modal from "../Modal";
 import Button from "../Button";

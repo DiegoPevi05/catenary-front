@@ -90,7 +90,7 @@ class CantileverGerman extends Cantilever {
 
   //getWireSupportDistanceFromFixedPoint
   getWireSupportDistanceFromFixedPoint():number {
-    let dx = this.getMwAxis().x - this.getSwivelClevisUtilLength(this.stay_tube.swivel_bracket,this.stay_tube.swivel_clevis);
+      let dx = this.getMwAxis().x - this.getSwivelClevisUtilLength(this.stay_tube.swivel_bracket,this.stay_tube.swivel_clevis);
       return (dx)*(1/Math.cos(this.degreesToRadians(360 + this.stay_tube.alpha))) +  this.stay_tube.mw_support.wireSupport.h*(Math.tan(this.degreesToRadians(360 + this.stay_tube.alpha)));
   }
 
@@ -197,11 +197,11 @@ class CantileverGerman extends Cantilever {
 
   getSteadyArmFixedPoint():{x:number, y:number}{
 
-    let angleModified = (this.steady_arm.swivel_clip.cw_angle) + (360 + this.steady_arm.alpha);
+    let angleModified = (180 + this.steady_arm.swivel_clip.cw_angle + this.steady_arm.alpha);
 
-    let x_axis =  this.getCwAxis().x + this.steady_arm.swivel_clip.cw_height * Math.cos(this.degreesToRadians(angleModified));
+    let x_axis =  this.getCwAxis().x - this.steady_arm.swivel_clip.cw_height * Math.cos(this.degreesToRadians(angleModified));
 
-    let y_axis =  this.getCwAxis().y + this.steady_arm.swivel_clip.cw_height * Math.sin(this.degreesToRadians(angleModified)); 
+    let y_axis =  this.getCwAxis().y - this.steady_arm.swivel_clip.cw_height * Math.sin(this.degreesToRadians(angleModified)); 
 
     return { x: x_axis, y:y_axis  }
   }
@@ -223,7 +223,7 @@ class CantileverGerman extends Cantilever {
 
     let bottom_left_angle =  inferior_tube_angle - this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(),this.getSteadyArmFixedPoint())
 
-    let upper_angle = 180 - this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(), this.getUpperTubeEyeClampFixedPoint()) - this.steady_arm.alpha;
+    let upper_angle = 180 - this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(), this.getUpperTubeEyeClampFixedPoint()) + this.steady_arm.alpha;
 
     let right_angle = 180  - upper_angle - bottom_left_angle;
 
@@ -255,9 +255,12 @@ class CantileverGerman extends Cantilever {
   getIntersectionSteadyArmFixedPoint():{x:number,y:number}{
     let bottom_left_angle = this.getAngleBetweenTwoPoints(this.getBottomFixedPoint(), this.getUpperTubeEyeClampFixedPoint());
 
-    let internal_angle = bottom_left_angle + this.steady_arm.alpha;
 
-    let length_fixed_point = this.bracket_tube.eye_clamp.h/Math.sin(this.radiansToDegress(internal_angle))
+    let internal_angle = bottom_left_angle - this.steady_arm.alpha;
+
+
+    let length_fixed_point = this.bracket_tube.eye_clamp.h/Math.sin(this.degreesToRadians(internal_angle))
+
 
     let x_axis =  this.getIntersectionPoint().x + length_fixed_point * Math.cos(this.degreesToRadians(360 + this.steady_arm.alpha));
 
@@ -267,6 +270,55 @@ class CantileverGerman extends Cantilever {
 
   }
 
+  generateResults():{ name:string, diameter:number, thickness:number, length_tube:number, cut_length:number }[]{
+    //
+    //Stay Stube
+    const dimensions = [
+      {
+        name:"stay_tube",
+        diameter:this.stay_tube.tube.d,
+        thickness:this.stay_tube.tube.s,
+        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),
+        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))+20 
+      },
+      {
+        name:"bracket_tube",
+        diameter:this.bracket_tube.tube.d,
+        thickness:this.bracket_tube.tube.s,
+        length_tube:this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()),
+        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()))+20 
+      },
+      {
+        name:"steady_arm",
+        diameter:this.steady_arm.tube.d,
+        thickness:this.steady_arm.tube.s,
+        length_tube:this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()),
+        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()))+20 
+      }
+    ]
+
+    if(this.type != "TDP<2.2"){
+      dimensions.push({
+        name:"steel_cable",
+        diameter:this.stay_tube.tube.d,
+        thickness:this.stay_tube.tube.s,
+        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),
+        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))+20 
+      })
+    }
+
+    if(this.type == "CAI"){
+      dimensions.push({
+        name:"register_arm",
+        diameter:this.stay_tube.tube.d,
+        thickness:this.stay_tube.tube.s,
+        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),
+        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))+20 
+      })
+    }
+
+    return dimensions;
+  }
 
 
   generateLinks():{x1:number,y1:number, x2:number,y2:number, dimension_line:boolean}[]{
@@ -306,9 +358,10 @@ class CantileverGerman extends Cantilever {
 
     links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y ,  x2: this.getSteadyArmEndPoint().x, y2:this.getSteadyArmEndPoint().y, dimension_line:true });
 
-    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y ,  x2: this.getIntersectionTubeFixedPoint().x, y2:this.getIntersectionTubeFixedPoint().y, dimension_line:true });
-
     links.push({  x1: this.getIntersectionTubeFixedPoint().x, y1:this.getIntersectionTubeFixedPoint().y ,  x2: this.getIntersectionSteadyArmFixedPoint().x, y2:this.getIntersectionSteadyArmFixedPoint().y, dimension_line:true });
+    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y ,  x2: this.getIntersectionSteadyArmFixedPoint().x, y2:this.getIntersectionSteadyArmFixedPoint().y, dimension_line:true });
+
+
 
     return links;
   }

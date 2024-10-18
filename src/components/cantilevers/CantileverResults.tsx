@@ -1,5 +1,6 @@
 import Compas from "../../assets/images/svg/common/results.svg?react";
 import GermanCantilever from "../../models/cantilevers/GermanCantilever";
+import Diameter from "../../assets/images/svg/common/diameter.svg?react";
 
 interface ResultsProps {
   cantilever:GermanCantilever;
@@ -21,7 +22,7 @@ const CantileverResults = (props:ResultsProps) => {
               <label className="font-bold text-secondary-dark">Stay Tube</label>
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Diameter Tube (mm)</p>
+              <p className="font-bold text-primary text-sm inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={cantilever.stay_tube.tube.d}
@@ -54,7 +55,7 @@ const CantileverResults = (props:ResultsProps) => {
               <label className="font-bold text-secondary-dark">Bracket Tube</label>
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Diameter Tube (mm)</p>
+              <p className="font-bold text-primary text-sm inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
 
@@ -89,7 +90,7 @@ const CantileverResults = (props:ResultsProps) => {
               <label className="font-bold text-secondary-dark">Steady Arm</label>
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Diameter Tube (mm)</p>
+              <p className="font-bold text-primary text-sm inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={cantilever.steady_arm.tube.d}
