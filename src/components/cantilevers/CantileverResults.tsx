@@ -9,6 +9,8 @@ const CantileverResults = (props:ResultsProps) => {
 
   const {cantilever} = props;
 
+  const results = cantilever.generateResults();
+
   return(
     <div className="w-full h-full flex flex-col">
       <div className="w-full h-full flex flex-col justify-start items-start overflow-y-scroll">
@@ -41,12 +43,16 @@ const CantileverResults = (props:ResultsProps) => {
               <p className="font-bold text-primary text-sm">Length Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
+                value={results.find(item=> item.name == "stay_tube")?.length_tube}
+                readOnly
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
               <p className="font-bold text-primary text-sm">Cut Length (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
+                value={results.find(item=> item.name == "stay_tube")?.cut_length}
+                readOnly
               />
             </div>
           </div>
@@ -75,12 +81,16 @@ const CantileverResults = (props:ResultsProps) => {
               <p className="font-bold text-primary text-sm">Length Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
+                value={results.find(item=> item.name == "bracket_tube")?.length_tube}
+                readOnly
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
               <p className="font-bold text-primary text-sm">Cut Length (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
+                value={results.find(item=> item.name == "bracket_tube")?.cut_length}
+                readOnly
               />
             </div>
           </div>
@@ -109,12 +119,16 @@ const CantileverResults = (props:ResultsProps) => {
               <p className="font-bold text-primary text-sm">Length Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
+                value={results.find(item=> item.name == "steady_arm")?.length_tube}
+                readOnly
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
               <p className="font-bold text-primary text-sm">Cut Length (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
+                value={results.find(item=> item.name == "steady_arm")?.cut_length}
+                readOnly
               />
             </div>
           </div>

@@ -271,28 +271,27 @@ class CantileverGerman extends Cantilever {
   }
 
   generateResults():{ name:string, diameter:number, thickness:number, length_tube:number, cut_length:number }[]{
-    //
     //Stay Stube
     const dimensions = [
       {
         name:"stay_tube",
         diameter:this.stay_tube.tube.d,
         thickness:this.stay_tube.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),
-        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))+20 
+        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()).toFixed(2),
+        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))  
       },
       {
         name:"bracket_tube",
         diameter:this.bracket_tube.tube.d,
         thickness:this.bracket_tube.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()),
+        length_tube:this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()).toFixed(2),
         cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()))+20 
       },
       {
         name:"steady_arm",
         diameter:this.steady_arm.tube.d,
         thickness:this.steady_arm.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()),
+        length_tube:this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()).toFixed(2),
         cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()))+20 
       }
     ]
@@ -302,7 +301,7 @@ class CantileverGerman extends Cantilever {
         name:"steel_cable",
         diameter:this.stay_tube.tube.d,
         thickness:this.stay_tube.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),
+        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()).toFixed(2),
         cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))+20 
       })
     }
@@ -312,7 +311,7 @@ class CantileverGerman extends Cantilever {
         name:"register_arm",
         diameter:this.stay_tube.tube.d,
         thickness:this.stay_tube.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),
+        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()).toFixed(2),
         cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))+20 
       })
     }
