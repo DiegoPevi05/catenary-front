@@ -1,8 +1,30 @@
 import { Fragment } from "react/jsx-runtime";
 import { Canvas } from "@react-three/fiber";
-import {PerspectiveCamera, Line, Text, OrbitControls } from "@react-three/drei";
+import {PerspectiveCamera, Line, Text, OrbitControls, useGLTF } from "@react-three/drei";
 import GermanCantilever from "../../models/cantilevers/GermanCantilever";
 import * as THREE from 'three';
+//// Load GLB model and position it at (0, 0, 0)
+interface PropsRailModel {
+  pv:number;
+}
+
+const RailModel = (props:PropsRailModel) => {
+  const {pv}= props;
+  const { scene } = useGLTF("/models/rail.glb"); // Replace with the actual path to your GLB model
+
+  return <primitive object={scene} position={[pv, 0, 0]} scale={1000} />;
+};
+
+interface PropsTrainModel {
+  pv:number;
+}
+
+const TrainModel = (props:PropsTrainModel) => {
+  const {pv}= props;
+  const { scene } = useGLTF("/models/train.glb"); // Replace with the actual path to your GLB model
+
+  return <primitive object={scene} position={[pv, 0, 0]} scale={1000} />;
+}
 
 interface GenerateWiresProps {
   point: { x: number; y: number; z: number };
@@ -70,12 +92,22 @@ const CantileverViewer = (props:CantileverViewerProps) => {
         maxDistance={100000} // Maximum zoom distance
       />
       <axesHelper args={[1000]} />
-      {type == "3D" && ambient && (
+
+      {type == "3D" && labels && (
         <>
           <GenerateWires point={cantilever.getCwAxis()} length={2000} />
           <GenerateWires point={cantilever.getMwAxis()} length={2000} />
 
           <Line points={[new THREE.Vector3(cantilever.pv,0,0), new THREE.Vector3(cantilever.pv,cantilever.getMwAxis().y+1000,0)]} color="#FFFF00" lineWidth={4}  dashed/>
+        </>
+      )}
+      {type == "3D" && ambient && (
+        <>
+          <ambientLight intensity={10} /> {/* General ambient light */}
+          <directionalLight intensity={4} position={[10, 10, 5]} /> {/* Strong directional light */}
+          <pointLight intensity={4} position={[-10, -10, -5]} /> 
+          <RailModel pv={cantilever.pv}/>
+          <TrainModel pv={cantilever.pv}/>
         </>
       )}
       {/* Iterate over links, now with 3D positions */}
@@ -89,7 +121,7 @@ const CantileverViewer = (props:CantileverViewerProps) => {
 
         // Calculate a perpendicular offset for the dimension line in 3D
         const direction = new THREE.Vector3().subVectors(end, start).normalize();
-        const perpendicular = new THREE.Vector3(-direction.y, direction.x, 0); // This works for 2D
+        //const perpendicular = new THREE.Vector3(-direction.y, direction.x, 0); // This works for 2D
         const offsetDistance = 100; // Distance from the original line
         
         // Ensure the perpendicular direction works for 3D by using cross product with another axis
