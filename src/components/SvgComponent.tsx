@@ -1,6 +1,8 @@
 import React from 'react';
 import CantileverGYType1 from "../assets/images/svg/cantilevers/cantilever_gy_type_1.svg?react"; // Ensure you're using this import
 import CantileverGYType2 from "../assets/images/svg/cantilevers/cantilever_gy_type_2.svg?react"; // Ensure you're using this import
+import CantileverGYType3 from "../assets/images/svg/cantilevers/cantilever_gy_type_3.svg?react"; // Ensure you're using this import
+import CantileverGYType4 from "../assets/images/svg/cantilevers/cantilever_gy_type_4.svg?react"; // Ensure you're using this import
 import Via from "../assets/images/svg/via/via.svg?react"; // Ensure you're using this import
 import Vane from "../assets/images/svg/vane/vane.svg?react"; // Ensure you're using this import
 import Dropper from "../assets/images/svg/dropper/dropper.svg?react"; // Ensure you're using this import
@@ -10,7 +12,7 @@ import Gear from "../assets/images/svg/common/gear.svg?react"; // Ensure you're 
 import DoorOpen from "../assets/images/svg/common/door-open.svg?react"; // Ensure you're using this import
 
 
-type IconKeys = 'cantilever_gy_type_1'|'cantilever_gy_type_2'|'via'|'vane'|'dropper'|'dashboard'|'gear'|'user'|'door_open'; // Extend this type as needed
+type IconKeys = 'cantilever_gy_type_1'|'cantilever_gy_type_2'|'cantilever_gy_type_3'|'cantilever_gy_type_4'|'via'|'vane'|'dropper'|'dashboard'|'gear'|'user'|'door_open'; // Extend this type as needed
 
 const optionsIcons: Record<IconKeys, React.FC<React.SVGProps<SVGSVGElement>>> = {
   user:User,
@@ -22,6 +24,8 @@ const optionsIcons: Record<IconKeys, React.FC<React.SVGProps<SVGSVGElement>>> = 
   dashboard:Dashboard,
   cantilever_gy_type_1: CantileverGYType1,
   cantilever_gy_type_2: CantileverGYType2,
+  cantilever_gy_type_3: CantileverGYType3,
+  cantilever_gy_type_4: CantileverGYType4
 };
 
 interface PropsSvgComponent {

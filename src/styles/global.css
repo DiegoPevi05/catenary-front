@@ -57,10 +57,6 @@ h5 {
 	font-size: 23px;
 }
 
-p {
-	font-size: 16px;
-}
-
 span {
 	font-size: 19px;
 }
@@ -70,8 +66,13 @@ label {
 }
 
 body {
-	font-size: 16px;
+	font-size: 14px;
 }
+
+p {
+	font-size: 12px;
+}
+
 
 
 caption {
@@ -102,7 +103,7 @@ caption {
 	}
 
 	p {
-		font-size: 14px;
+		font-size: 12px;
 	}
 
 	span {

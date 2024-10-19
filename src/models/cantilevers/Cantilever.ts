@@ -35,7 +35,7 @@ class Cantilever {
   }
 
   getDistanceBetweenTwoPoints(point1:{x:number,y:number},point2:{x:number,y:number}):number{
-    return  Math.sqrt(Math.pow((point2.y - point1.y), 2) + Math.pow((point2.x + point1.x),2))  ; 
+    return  Math.sqrt(Math.pow((point2.y - point1.y), 2) + Math.pow((point2.x - point1.x),2))  ; 
   }
 
   getAngleBetweenTwoPoints(point1:{x:number,y:number},point2:{x:number,y:number}):number {
@@ -52,7 +52,7 @@ class Cantilever {
   }
 
 
-  getViaAxis():{x:number, y:number}{
+  getViaAxis():{x:number, y:number, z:number}{
     let x_axis = 0;
     let y_axis = 0;
 
@@ -64,10 +64,10 @@ class Cantilever {
       y_axis =  this.contact_wire_height*Math.cos(this.getBitolaAngle())
     }
 
-    return { x: x_axis, y:y_axis  }
+    return { x: x_axis, y:y_axis, z:0}
   }
 
-  getCwAxis():{x:number, y:number}{
+  getCwAxis():{x:number, y:number, z:number}{
 
     let x_axis = 0;
     let y_axis = 0;
@@ -81,7 +81,7 @@ class Cantilever {
       y_axis = this.getViaAxis().y-this.zig_zag*(Math.sin(this.getBitolaAngle()));
     }
 
-    return { x: x_axis, y:y_axis  }
+    return { x: x_axis, y:y_axis, z:0  }
   }
 
   getIsolatorUtilLength(isolator:Isolator):number{
@@ -97,10 +97,10 @@ class Cantilever {
 
   }
 
-  getMwAxis():{x:number,y:number}{
+  getMwAxis():{x:number,y:number, z:number}{
     let x_axis = this.getCwAxis().x;
     let y_axis = this.getCwAxis().y + this.system_height;
-    return { x: x_axis, y:y_axis  }
+    return { x: x_axis, y:y_axis, z:0  }
 
   }
 
@@ -111,6 +111,12 @@ class Cantilever {
       bottom: this.getCwAxis().y - 500,
       top:this.getMwAxis().y + 500
     }
+  }
+
+  roundToDecimals(value:number, qtyDecimals:number):number{
+    const decimals = Math.pow(10, qtyDecimals);
+    const rounded = Math.round(value * decimals) / decimals; 
+    return  rounded;
   }
 
 }

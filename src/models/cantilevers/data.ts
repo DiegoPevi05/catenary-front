@@ -16,6 +16,24 @@ export const OptionsCantileverData:{ id:number, model:{ code:"GY"|"ES"|"FR", nam
     },
     type:"CAI",
     icon:'cantilever_gy_type_2',
+  },
+  {
+    id:3,
+    model:{
+      code:"GY",
+      name:"German"
+    },
+    type:"TDP>2.2",
+    icon:'cantilever_gy_type_3',
+  },
+  {
+    id:3,
+    model:{
+      code:"GY",
+      name:"German"
+    },
+    type:"SBA",
+    icon:'cantilever_gy_type_4',
   }
 ];
 

@@ -37,12 +37,12 @@ const CantileverSelector = (props:PropsCantileverSelector) => {
         </span>
         <div className="w-full h-full flex flex-col items-end">
           <span className="h-auto w-auto flex flex-row gap-x-4">
-            <p className="text-sm">Model:</p>
-            <p className="text-sm font-bold">{currentOption.model.name}</p>
+            <p className="">Model:</p>
+            <p className=" font-bold">{currentOption.model.name}</p>
           </span>
           <span className="h-auto w-auto flex flex-row gap-x-4">
-            <p className="text-sm">Type</p>
-            <p className="text-sm font-bold">{currentOption.type}</p>
+            <p className="">Type</p>
+            <p className=" font-bold">{currentOption.type}</p>
           </span>
         </div>
       </div>
@@ -56,12 +56,12 @@ const CantileverSelector = (props:PropsCantileverSelector) => {
                 </span>
                 <div className="w-full h-full flex flex-col items-end">
                   <span className="h-auto w-auto flex flex-row gap-x-4">
-                    <p className="text-sm">Model:</p>
-                    <p className="text-sm font-bold">{option.model.name}</p>
+                    <p className="">Model:</p>
+                    <p className=" font-bold">{option.model.name}</p>
                   </span>
                   <span className="h-auto w-auto flex flex-row gap-x-4">
-                    <p className="text-sm">Type</p>
-                    <p className="text-sm font-bold">{option.type}</p>
+                    <p className="">Type</p>
+                    <p className=" font-bold">{option.type}</p>
                   </span>
                 </div>
               </div>
@@ -93,7 +93,7 @@ const SectionForm = (props:SectionProps) => {
   return(
     <div className="w-full h-auto flex flex-col">
       <span onClick={toogleOpen} className="flex flex-row justify-between items-center text-primary bg-secondary hover:bg-gray-100 px-4 py-2 cursor-pointer">
-        <h5 className="capitalize font-bold">{t(label)}</h5>
+        <label className="capitalize font-bold">{t(label)}</label>
         {isOpen ?
           <ChevronDown className="h-10 w-10"/>
         :
@@ -123,7 +123,7 @@ const CantileverForm = (props:CantileverFormProps) => {
   const { external_id, model,  cantilever, handleChange, handleChangeType } = props;
 
   return(
-    <div className="w-full h-full flex flex-col py-4">
+    <div className="w-full h-full flex flex-col py-4 z-20">
       <h4 className="font-bold text-secondary-dark px-4 my-2">{"Cantilever "+external_id}</h4>
 
       <label className="font-bold text-secondary-dark px-4">Cantilever Type</label>
@@ -131,7 +131,7 @@ const CantileverForm = (props:CantileverFormProps) => {
       <div className="w-full h-full flex flex-col justify-start items-start overflow-y-scroll">
         <SectionForm label={"Main Params"} defaultOpen={true}>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">System Height (mm)</p>
+            <p className="font-bold text-primary ">System Height (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -141,7 +141,7 @@ const CantileverForm = (props:CantileverFormProps) => {
           </div>
 
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Contact Wire Height (mm)</p>
+            <p className="font-bold text-primary ">Contact Wire Height (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -151,7 +151,7 @@ const CantileverForm = (props:CantileverFormProps) => {
           </div>
 
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Zig Zag (mm)</p>
+            <p className="font-bold text-primary ">Zig Zag (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -161,7 +161,7 @@ const CantileverForm = (props:CantileverFormProps) => {
           </div>
 
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">PV (mm)</p>
+            <p className="font-bold text-primary ">PV (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -170,7 +170,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Esc (mm)</p>
+            <p className="font-bold text-primary ">Esc (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -179,7 +179,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Bitola (mm)</p>
+            <p className="font-bold text-primary ">Bitola (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -188,7 +188,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Stay Tube Inclination (degrees)</p>
+            <p className="font-bold text-primary ">Stay Tube Inclination (degrees)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -197,7 +197,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Steady Arm Angle (degrees)</p>
+            <p className="font-bold text-primary ">Steady Arm Angle (degrees)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -211,7 +211,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Isolator</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Full Length (mm)</p>
+            <p className="font-bold text-primary ">Full Length (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -220,7 +220,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Tube Length (mm)</p>
+            <p className="font-bold text-primary ">Tube Length (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -232,7 +232,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Wire Support</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Distance Eye Clamp (mm)</p>
+            <p className="font-bold text-primary ">Distance Eye Clamp (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -241,7 +241,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">End Distance (mm)</p>
+            <p className="font-bold text-primary ">End Distance (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -250,7 +250,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Vertical Length (mm)</p>
+            <p className="font-bold text-primary ">Vertical Length (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -259,7 +259,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Eye Clamp - Tube to Pin Length</p>
+            <p className="font-bold text-primary ">Eye Clamp - Tube to Pin Length</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -271,7 +271,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Fixed Point</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Pole - Swivel Pin</p>
+            <p className="font-bold text-primary ">Pole - Swivel Pin</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -280,7 +280,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Pin - Pin  (mm)</p>
+            <p className="font-bold text-primary ">Pin - Pin  (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -294,7 +294,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Isolator</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Full Length (mm)</p>
+            <p className="font-bold text-primary ">Full Length (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -303,7 +303,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Tube Length (mm)</p>
+            <p className="font-bold text-primary ">Tube Length (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -315,7 +315,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Fixed Point</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Pole - Swivel Pin</p>
+            <p className="font-bold text-primary ">Pole - Swivel Pin</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -324,7 +324,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Pin - Pin  (mm)</p>
+            <p className="font-bold text-primary ">Pin - Pin  (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -336,7 +336,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Clevis End Fitting</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Full Length (mm)</p>
+            <p className="font-bold text-primary ">Full Length (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -345,7 +345,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Tube Length  (mm)</p>
+            <p className="font-bold text-primary ">Tube Length  (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -357,7 +357,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Eye Clamp</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Tube to Pin Length</p>
+            <p className="font-bold text-primary ">Tube to Pin Length</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -371,7 +371,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Swivel Clip</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">End Distance (mm)</p>
+            <p className="font-bold text-primary ">End Distance (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -380,7 +380,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Center to Cw (mm)</p>
+            <p className="font-bold text-primary ">Center to Cw (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -389,7 +389,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Angle to Cw (mm)</p>
+            <p className="font-bold text-primary ">Angle to Cw (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -401,7 +401,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             <label className="font-bold text-secondary-dark">Hook End Fitting</label>
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Full Length (mm)</p>
+            <p className="font-bold text-primary ">Full Length (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
@@ -410,7 +410,7 @@ const CantileverForm = (props:CantileverFormProps) => {
             />
           </div>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-            <p className="font-bold text-primary text-sm">Tube Length  (mm)</p>
+            <p className="font-bold text-primary ">Tube Length  (mm)</p>
             <input
               type="number"
               className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"

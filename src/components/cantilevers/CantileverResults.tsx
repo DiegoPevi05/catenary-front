@@ -21,10 +21,10 @@ const CantileverResults = (props:ResultsProps) => {
           </div>
           <div className="col-span-2 gap-y-2 grid grid-cols-4 gap-4">
             <div className="col-span-4 w-full h-auto border-b-gray-light border-b-2 pb-2 mb-4">
-              <label className="font-bold text-secondary-dark">Stay Tube</label>
+              <p className="font-bold text-secondary-dark">Stay Tube</p>
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
+              <p className="font-bold text-primary inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={cantilever.stay_tube.tube.d}
@@ -32,7 +32,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Thick Tube (mm)</p>
+              <p className="font-bold text-primary ">Thick Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={cantilever.stay_tube.tube.s}
@@ -40,7 +40,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Length Tube (mm)</p>
+              <p className="font-bold text-primary ">Length Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={results.find(item=> item.name == "stay_tube")?.length_tube}
@@ -48,7 +48,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Cut Length (mm)</p>
+              <p className="font-bold text-primary ">Cut Length (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={results.find(item=> item.name == "stay_tube")?.cut_length}
@@ -58,10 +58,10 @@ const CantileverResults = (props:ResultsProps) => {
           </div>
           <div className="col-span-2 gap-y-2 grid grid-cols-4 gap-4">
             <div className="col-span-4 w-full h-auto border-b-gray-light border-b-2 pb-2 mb-4">
-              <label className="font-bold text-secondary-dark">Bracket Tube</label>
+              <p className="font-bold text-secondary-dark">Bracket Tube</p>
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
+              <p className="font-bold text-primary  inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
 
@@ -70,7 +70,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Thick Tube (mm)</p>
+              <p className="font-bold text-primary ">Thick Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={cantilever.bracket_tube.tube.s}
@@ -78,7 +78,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Length Tube (mm)</p>
+              <p className="font-bold text-primary ">Length Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={results.find(item=> item.name == "bracket_tube")?.length_tube}
@@ -86,7 +86,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Cut Length (mm)</p>
+              <p className="font-bold text-primary ">Cut Length (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={results.find(item=> item.name == "bracket_tube")?.cut_length}
@@ -97,10 +97,10 @@ const CantileverResults = (props:ResultsProps) => {
 
           <div className="col-span-2 gap-y-2 grid grid-cols-4 gap-4">
             <div className="col-span-4 w-full h-auto border-b-gray-light border-b-2 pb-2 mb-4">
-              <label className="font-bold text-secondary-dark">Steady Arm</label>
+              <p className="font-bold text-secondary-dark">Steady Arm</p>
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
+              <p className="font-bold text-primary  inline-flex gap-x-2"><Diameter className="w-5 h-5"/> Tube Diameter (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={cantilever.steady_arm.tube.d}
@@ -108,7 +108,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Thick Tube (mm)</p>
+              <p className="font-bold text-primary ">Thick Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={cantilever.steady_arm.tube.s}
@@ -116,7 +116,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Length Tube (mm)</p>
+              <p className="font-bold text-primary ">Length Tube (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={results.find(item=> item.name == "steady_arm")?.length_tube}
@@ -124,7 +124,7 @@ const CantileverResults = (props:ResultsProps) => {
               />
             </div>
             <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
-              <p className="font-bold text-primary text-sm">Cut Length (mm)</p>
+              <p className="font-bold text-primary ">Cut Length (mm)</p>
               <input
                 className="border-[3px] border-gray-lights text-body rounded-xl focus:outline-none focus:border-[3px] w-full px-2 py-2 text-center"
                 value={results.find(item=> item.name == "steady_arm")?.cut_length}

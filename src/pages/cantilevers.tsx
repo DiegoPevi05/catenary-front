@@ -62,8 +62,8 @@ const CantileversPage = () => {
 
   return(
       <Layout>
-        <div className="h-full w-full grid grid-cols-3 gap-4">
-          <div className="col-span-2 row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 animation-group shadow-sm">
+        <div className="h-full w-full flex flex-col justify-start items-start overflow-y-scroll xl:grid xl:grid-cols-3 gap-4">
+          <div className="w-full h-full xl:col-span-2 xl:row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 animation-group shadow-sm">
             <div className="w-auto h-auto flex flex-row justify-start items-center gap-x-4">
               <h4 className="font-bold text-body">Cantilevers</h4>
               <span className="bg-body text-white rounded-full h-8 w-8 font-bold flex items-center justify-center">
@@ -91,7 +91,7 @@ const CantileversPage = () => {
               )
             })}
           </div>
-          <div className="col-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start p-4 gap-y-4 shadow-sm">
+          <div className="hidden h-full xl:flex xl:col-span-1 border-2 border-gray-light rounded-xl flex-col justify-start items-start p-4 gap-y-4 shadow-sm">
             {selectedCantilever.data == null || selectedCantilever.cantilever == null ?
               <div className="w-full h-full flex flex-col justify-center items-center text-primary">
                 <LoaderCantilever noLabel={true} className="h-56 w-56"/>
@@ -101,7 +101,7 @@ const CantileversPage = () => {
             <>
               <h5 className="font-bold text-secondary-dark">{`Cantilever: ${selectedCantilever.data?.external_id}`}</h5>
               <div className="w-full h-[300px] flex flex-col justify-start items-start p-4">
-                  <CantileverViewer cantilever={selectedCantilever.cantilever}/>
+                  <CantileverViewer cantilever={selectedCantilever.cantilever} type={"2D"} labels={false} ambient={false}/>
               </div>
               <div className="w-full h-auto grid grid-cols-2 gap-4">
                 <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">

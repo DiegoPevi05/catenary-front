@@ -277,22 +277,22 @@ class CantileverGerman extends Cantilever {
         name:"stay_tube",
         diameter:this.stay_tube.tube.d,
         thickness:this.stay_tube.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()).toFixed(2),
-        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))  
+        length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()), 2),
+        cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),-1)  
       },
       {
         name:"bracket_tube",
         diameter:this.bracket_tube.tube.d,
         thickness:this.bracket_tube.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()).toFixed(2),
-        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()))+20 
+        length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()),2),
+        cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getBottomIsolatorPoint(),this.getUpperEyeClampClevisFixedPoint()),-1) 
       },
       {
         name:"steady_arm",
         diameter:this.steady_arm.tube.d,
         thickness:this.steady_arm.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()).toFixed(2),
-        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()))+20 
+        length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()),2),
+        cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getIntersectionSteadyArmFixedPoint()),-1) 
       }
     ]
 
@@ -301,8 +301,8 @@ class CantileverGerman extends Cantilever {
         name:"steel_cable",
         diameter:this.stay_tube.tube.d,
         thickness:this.stay_tube.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()).toFixed(2),
-        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))+20 
+        length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),2),
+        cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),-1) 
       })
     }
 
@@ -311,56 +311,72 @@ class CantileverGerman extends Cantilever {
         name:"register_arm",
         diameter:this.stay_tube.tube.d,
         thickness:this.stay_tube.tube.s,
-        length_tube:this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()).toFixed(2),
-        cut_length: Math.round(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()))+20 
+        length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),2),
+        cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),-1)
       })
     }
 
     return dimensions;
   }
 
+  getCenters():{cantilever_center:{x:number,y:number,z:number}, global_center:{x:number,y:number,z:number}}{
+    let cantilever_center = {x:0,y:0,z:0};
+    let global_center = {x:0,y:0,z:0};
 
-  generateLinks():{x1:number,y1:number, x2:number,y2:number, dimension_line:boolean}[]{
+    cantilever_center.x = this.pv/2;
 
-    let links:{x1:number,y1:number, x2:number,y2:number, dimension_line:boolean}[] = [];
+    cantilever_center.y = (this.getUpperPoleFixedPoint().y - this.getBottomPoleFixedPoint().y)/2 + this.getBottomPoleFixedPoint().y ;
+    cantilever_center.z = this.pv*0.7;
 
-    links.push({  x1: 0, y1:this.esc ,  x2: 0, y2:6500, dimension_line:false });
+    global_center.x = this.pv;
+
+    global_center.y = this.getUpperPoleFixedPoint().y/2;
+
+    global_center.z = this.pv*0.5;
+
+    return {cantilever_center, global_center};
+  }
+
+
+  generateLinks():{x1:number,y1:number,z1:number, x2:number,y2:number,z2:number, dimension_line:boolean}[]{
+
+    let links:{x1:number,y1:number,z1:number, x2:number,y2:number,z2:number, dimension_line:boolean}[] = [];
+
+    links.push({  x1: 0, y1:this.esc ,z1:0,  x2: 0, y2:6500,z2:0, dimension_line:false });
 
     //upper links
-    links.push({  x1: this.getUpperPoleFixedPoint().x, y1:this.getUpperPoleFixedPoint().y, x2:this.getUpperFixedPoint().x, y2:this.getUpperFixedPoint().y,  dimension_line:false });
+    links.push({  x1: this.getUpperPoleFixedPoint().x, y1:this.getUpperPoleFixedPoint().y, z1:0, x2:this.getUpperFixedPoint().x, y2:this.getUpperFixedPoint().y, z2:0,  dimension_line:false });
 
-    links.push({  x1:this.getUpperFixedPoint().x, y1:this.getUpperFixedPoint().y, x2: this.getUpperIsolatorPoint().x, y2:this.getUpperIsolatorPoint().y, dimension_line:true });
+    links.push({  x1:this.getUpperFixedPoint().x, y1:this.getUpperFixedPoint().y, z1:0, x2: this.getUpperIsolatorPoint().x, y2:this.getUpperIsolatorPoint().y, z2:0, dimension_line:true });
 
-    links.push({  x1:this.getUpperIsolatorPoint().x, y1:this.getUpperIsolatorPoint().y, x2: this.getUpperTubeEyeClampTubeFixedPoint().x, y2:this.getUpperTubeEyeClampTubeFixedPoint().y, dimension_line:true });
+    links.push({  x1:this.getUpperIsolatorPoint().x, y1:this.getUpperIsolatorPoint().y, z1:0, x2: this.getUpperTubeEyeClampTubeFixedPoint().x, y2:this.getUpperTubeEyeClampTubeFixedPoint().y, z2:0, dimension_line:true });
 
 
-    links.push({  x1: this.getUpperTubeEyeClampTubeFixedPoint().x, y1:this.getUpperTubeEyeClampTubeFixedPoint().y ,  x2: this.getWireSupportFixedPoint().x, y2:this.getWireSupportFixedPoint().y, dimension_line:true });
+    links.push({  x1: this.getUpperTubeEyeClampTubeFixedPoint().x, y1:this.getUpperTubeEyeClampTubeFixedPoint().y , z1:0,  x2: this.getWireSupportFixedPoint().x, y2:this.getWireSupportFixedPoint().y, z2:0, dimension_line:true });
 
-    links.push({  x1: this.getUpperTubeEyeClampTubeFixedPoint().x, y1:this.getUpperTubeEyeClampTubeFixedPoint().y ,  x2: this.getUpperTubeEyeClampFixedPoint().x, y2:this.getUpperTubeEyeClampFixedPoint().y, dimension_line:true });
+    links.push({  x1: this.getUpperTubeEyeClampTubeFixedPoint().x, y1:this.getUpperTubeEyeClampTubeFixedPoint().y ,z1:0,  x2: this.getUpperTubeEyeClampFixedPoint().x, y2:this.getUpperTubeEyeClampFixedPoint().y, z2:0, dimension_line:true });
 
-    links.push({  x1: this.getWireSupportFixedPoint().x, y1:this.getWireSupportFixedPoint().y ,  x2: this.getUpperTubeEndPoint().x, y2:this.getUpperTubeEndPoint().y, dimension_line:true });
+    links.push({  x1: this.getWireSupportFixedPoint().x, y1:this.getWireSupportFixedPoint().y , z1:0,  x2: this.getUpperTubeEndPoint().x, y2:this.getUpperTubeEndPoint().y, z2:0, dimension_line:true });
 
-    links.push({  x1: this.getWireSupportFixedPoint().x, y1:this.getWireSupportFixedPoint().y ,  x2: this.getMwAxis().x, y2:this.getMwAxis().y, dimension_line:true });
+    links.push({  x1: this.getWireSupportFixedPoint().x, y1:this.getWireSupportFixedPoint().y ,z1:0,  x2: this.getMwAxis().x, y2:this.getMwAxis().y, z2:0, dimension_line:true });
 
     //bottom links
-    links.push({  x1: this.getBottomPoleFixedPoint().x, y1:this.getBottomPoleFixedPoint().y ,  x2: this.getBottomFixedPoint().x, y2:this.getBottomFixedPoint().y, dimension_line:true });
+    links.push({  x1: this.getBottomPoleFixedPoint().x, y1:this.getBottomPoleFixedPoint().y , z1:0,  x2: this.getBottomFixedPoint().x, y2:this.getBottomFixedPoint().y, z2:0, dimension_line:true });
 
-    links.push({  x1: this.getUpperEyeClampClevisFixedPoint().x, y1:this.getUpperEyeClampClevisFixedPoint().y ,  x2: this.getUpperTubeEyeClampFixedPoint().x, y2:this.getUpperTubeEyeClampFixedPoint().y, dimension_line:false });
+    links.push({  x1: this.getUpperEyeClampClevisFixedPoint().x, y1:this.getUpperEyeClampClevisFixedPoint().y , z1:0,  x2: this.getUpperTubeEyeClampFixedPoint().x, y2:this.getUpperTubeEyeClampFixedPoint().y, z2:0, dimension_line:false });
 
-    links.push({  x1: this.getBottomFixedPoint().x, y1:this.getBottomFixedPoint().y ,  x2: this.getBottomIsolatorPoint().x, y2:this.getBottomIsolatorPoint().y, dimension_line:false });
+    links.push({  x1: this.getBottomFixedPoint().x, y1:this.getBottomFixedPoint().y , z1:0,  x2: this.getBottomIsolatorPoint().x, y2:this.getBottomIsolatorPoint().y, z2:0, dimension_line:false });
 
 
-    links.push({  x1: this.getBottomIsolatorPoint().x, y1:this.getBottomIsolatorPoint().y ,  x2: this.getUpperEyeClampClevisFixedPoint().x, y2:this.getUpperEyeClampClevisFixedPoint().y, dimension_line:true });
+    links.push({  x1: this.getBottomIsolatorPoint().x, y1:this.getBottomIsolatorPoint().y , z1:0,  x2: this.getUpperEyeClampClevisFixedPoint().x, y2:this.getUpperEyeClampClevisFixedPoint().y, z2:0, dimension_line:true });
     
     //steady arm
-    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y ,  x2: this.getCwAxis().x, y2:this.getCwAxis().y, dimension_line:true });
+    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:0,  x2: this.getCwAxis().x, y2:this.getCwAxis().y, z2:0, dimension_line:true });
 
-    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y ,  x2: this.getSteadyArmEndPoint().x, y2:this.getSteadyArmEndPoint().y, dimension_line:true });
+    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:0,  x2: this.getSteadyArmEndPoint().x, y2:this.getSteadyArmEndPoint().y, z2:0, dimension_line:true });
 
-    links.push({  x1: this.getIntersectionTubeFixedPoint().x, y1:this.getIntersectionTubeFixedPoint().y ,  x2: this.getIntersectionSteadyArmFixedPoint().x, y2:this.getIntersectionSteadyArmFixedPoint().y, dimension_line:true });
-    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y ,  x2: this.getIntersectionSteadyArmFixedPoint().x, y2:this.getIntersectionSteadyArmFixedPoint().y, dimension_line:true });
-
-
+    links.push({  x1: this.getIntersectionTubeFixedPoint().x, y1:this.getIntersectionTubeFixedPoint().y , z1:0,  x2: this.getIntersectionSteadyArmFixedPoint().x, y2:this.getIntersectionSteadyArmFixedPoint().y, z2:0, dimension_line:true });
+    links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:0,  x2: this.getIntersectionSteadyArmFixedPoint().x, y2:this.getIntersectionSteadyArmFixedPoint().y, z2:0, dimension_line:true });
 
     return links;
   }

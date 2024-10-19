@@ -50,38 +50,38 @@ const CantileverCard = (props:CantileverCard) => {
         </div>
         <div className="w-auto h-full flex flex-col justify-start items-start gap-y-1 text-body group-hover:text-white">
           <div className="flex flex-row gap-x-2">
-            <p className="text-sm">Cantilever:</p>
-            <p className="font-bold text-sm">{cantilever.external_id}</p>
+            <p>Cantilever:</p>
+            <p className="font-bold">{cantilever.external_id}</p>
           </div>
           <div className="flex flex-row gap-x-2">
-            <p className="text-sm">Pole:</p>
-            <p className="font-bold text-sm">{cantilever.pole}</p>
+            <p>Pole:</p>
+            <p className="font-bold">{cantilever.pole}</p>
           </div>
           <div className="flex flex-row gap-x-2">
-            <p className="text-sm">Via:</p>
-            <p className="font-bold text-sm">{cantilever.via}</p>
+            <p>Via:</p>
+            <p className="font-bold">{cantilever.via}</p>
           </div>
           <div className="flex flex-row gap-x-2">
-            <p className="text-sm">Location:</p>
-            <p className="font-bold text-sm">{cantilever.location}</p>
+            <p>Location:</p>
+            <p className="font-bold">{cantilever.location}</p>
           </div>
         </div>
         <div className="w-auto h-full flex flex-col justify-start items-start gap-y-1 text-body group-hover:text-white ml-12">
           <div className="flex flex-row gap-x-2">
-            <p className="text-sm">Model:</p>
-            <p className="font-bold text-sm">{cantilever.model.name}</p>
+            <p>Model:</p>
+            <p className="font-bold">{cantilever.model.name}</p>
           </div>
           <div className="flex flex-row gap-x-2">
-            <p className="text-sm">Type:</p>
-            <p className="font-bold text-sm">{cantilever.params.type}</p>
+            <p>Type:</p>
+            <p className="font-bold">{cantilever.params.type}</p>
           </div>
           <div className="flex flex-row gap-x-2">
-            <p className="text-sm">Updated:</p>
-            <p className="font-bold text-sm">{cantilever.updated_at.toISOString().split("T")[0]}</p>
+            <p>Updated:</p>
+            <p className="font-bold">{cantilever.updated_at.toISOString().split("T")[0]}</p>
           </div>
           <div className="flex flex-row gap-x-2">
-            <p className="text-sm">Created by:</p>
-            <p className="font-bold text-sm">{cantilever.created_by}</p>
+            <p>Created by:</p>
+            <p className="font-bold">{cantilever.created_by}</p>
           </div>
         </div>
         <div className="ml-auto w-auto h-full flex flex-col items-center justify-center gap-y-2 text-body group-hover:text-white">
