@@ -69,11 +69,11 @@ const CantileverCard = (props:CantileverCard) => {
         <div className="w-auto h-full flex flex-col justify-start items-start gap-y-1 text-body group-hover:text-white ml-12">
           <div className="flex flex-row gap-x-2">
             <p>Model:</p>
-            <p className="font-bold">{cantilever.model.name}</p>
+            <p className="font-bold">{cantilever.params.model.name}</p>
           </div>
           <div className="flex flex-row gap-x-2">
             <p>Type:</p>
-            <p className="font-bold">{cantilever.params.type}</p>
+            <p className="font-bold">{cantilever.params.model.type.configuration}</p>
           </div>
           <div className="flex flex-row gap-x-2">
             <p>Updated:</p>

@@ -56,9 +56,7 @@ const CantileverPage = () => {
     )
   },[location.state])
 
-  const handleChangeType = (code:ModelCode, name:string, type: TypeCantilever ) => {
-
-
+  const handleChangeType = (model:ModelInterface) => {
 
     setSelectedCantilever((prevSelectedCantilever:any) => {
       if (!prevSelectedCantilever || !prevSelectedCantilever.data) {
@@ -68,9 +66,7 @@ const CantileverPage = () => {
       // Clone the current cantilever
       const updatedCantilever = { ...prevSelectedCantilever.data };
 
-      updatedCantilever.model.code = code;
-      updatedCantilever.model.name = name;
-      updatedCantilever.params.type = type;
+      updatedCantilever.params.model = model;
 
       return {
         data:updatedCantilever,
@@ -150,33 +146,11 @@ const CantileverPage = () => {
             {selectedCantilever.cantilever &&(
               <CantileverViewer cantilever={selectedCantilever.cantilever} type={typeOfView} labels={labelsOn} ambient={AmbientOn}/>
             )}
-
-            {/*selectedCantilever.cantilever &&(
-              <div className={`${typeOfView == "3D" ? "scale-[1]": "scale-[0]"} fixed bg-white w-screen h-screen left-0 top-0 transition-all duration-300 z-[60] p-4`}>
-                <div className="w-full h-auto flex flex-row justify-end items-center gap-x-4">
-                  <div className="w-full flex flex-row justify-end gap-x-2">
-                    <button onClick={()=>handleTypeOfView('2D')} className={`h-10 w-10 shadow-md rounded-lg active:scale-95 border-2 p-2  ${typeOfView == "2D" ? "bg-primary text-white" : "bg-secondary text-body"}`}>
-                      <Model2D className="w-full h-full"/>
-                    </button>
-                    <button onClick={()=>handleTypeOfView('3D')} className={`h-10 w-10 shadow-md rounded-lg active:scale-95 border-2 p-2  ${typeOfView == "3D" ? "bg-primary text-white" : "bg-secondary text-body"}`}>
-                      <Model3D className="w-full h-full"/>
-                    </button>
-                    <button onClick={()=>handleLabelOn()} className={`h-10 w-10 shadow-md rounded-lg active:scale-95 border-2 p-2  ${labelsOn  ? "bg-primary text-white" : "bg-secondary text-body"}`}>
-                      <Tag className="w-full h-full"/>
-                    </button>
-                    <button onClick={()=>handleTypeOfView('2D')} className={`h-10 w-10 shadow-md rounded-lg active:scale-95 border-2 p-2 hover:bg-primary hover:text-white`}>
-                      <X className="w-full h-full"/>
-                    </button>
-                  </div>
-                </div>
-              <CantileverViewer cantilever={selectedCantilever.cantilever} type={typeOfView} labels={labelsOn}/>
-            </div>
-            )*/}
           </div>
         </div>
         <div className="w-full h-auto xl:col-span-1 xl:row-span-2 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start gap-y-4">
           {selectedCantilever.cantilever && selectedCantilever.data && 
-            <CantileverForm external_id={selectedCantilever.data.external_id} model={selectedCantilever.data.model} handleChange={handleChange} cantilever={selectedCantilever.cantilever} handleChangeType={handleChangeType}/>
+            <CantileverForm external_id={selectedCantilever.data.external_id} model={selectedCantilever.data.params.model} handleChange={handleChange} cantilever={selectedCantilever.cantilever} handleChangeType={handleChangeType}/>
           }
         </div>
         <div className="w-full h-auto xl:col-span-2 xl:row-span-1 border-2 border-gray-light rounded-xl flex flex-col justify-start items-start gap-y-4 animation-group py-4">

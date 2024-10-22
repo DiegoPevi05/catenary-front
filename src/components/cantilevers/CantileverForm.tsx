@@ -7,16 +7,16 @@ import SvgComponent from "../SvgComponent";
 import { OptionsCantileverData } from "../../models/cantilevers/data";
 
 interface PropsCantileverSelector {
-  options:{ id:number, model:{ code:ModelCode, name:string }, type: TypeCantilever, icon:string }[];
-  currentOption: { model:{ code:ModelCode, name:string }, type: TypeCantilever };
-  onChangeType:(code:ModelCode, name:string, type: TypeCantilever ) => void;
+  options:{ id:number, model:ModelInterface, icon:string }[];
+  currentOption: { model:ModelInterface };
+  onChangeType:(model:ModelInterface ) => void;
 }
 
 const CantileverSelector = (props:PropsCantileverSelector) => {
 
   const {options, currentOption, onChangeType} = props;
 
-  const currentIcon = options.find((item) => (item.model.code == currentOption.model.code && item.type == currentOption.type))
+  const currentIcon = options.find((item) => (item.model.code == currentOption.model.code && item.model.type.configuration == currentOption.model.type.configuration && item.model.type.contactWireConfiguration ==  currentOption.model.type.contactWireConfiguration))
 
   const [showOptions,setShowOptions] = useState<boolean>(false);
 
@@ -24,8 +24,8 @@ const CantileverSelector = (props:PropsCantileverSelector) => {
     setShowOptions(!showOptions);
   }
 
-  const handleSelectOption = (option:{ id:number, model:{ code:ModelCode, name:string }, type: TypeCantilever, icon:string }) => {
-    onChangeType(option.model.code, option.model.name, option.type);
+  const handleSelectOption = (option:{ id:number, model:ModelInterface, icon:string }) => {
+    onChangeType(option.model);
     setShowOptions(false);
   }
 
@@ -41,8 +41,12 @@ const CantileverSelector = (props:PropsCantileverSelector) => {
             <p className=" font-bold">{currentOption.model.name}</p>
           </span>
           <span className="h-auto w-auto flex flex-row gap-x-4">
-            <p className="">Type</p>
-            <p className=" font-bold">{currentOption.type}</p>
+            <p className="">Type:</p>
+            <p className=" font-bold">{currentOption.model.type.configuration}</p>
+          </span>
+          <span className="h-auto w-auto flex flex-row gap-x-4">
+            <p className="">Contact Wire Configuration:</p>
+            <p className=" font-bold">{currentOption.model.type.contactWireConfiguration}</p>
           </span>
         </div>
       </div>
@@ -61,7 +65,11 @@ const CantileverSelector = (props:PropsCantileverSelector) => {
                   </span>
                   <span className="h-auto w-auto flex flex-row gap-x-4">
                     <p className="">Type</p>
-                    <p className=" font-bold">{option.type}</p>
+                    <p className=" font-bold">{option.model.type.configuration}</p>
+                  </span>
+                  <span className="h-auto w-auto flex flex-row gap-x-4">
+                    <p className="">Contact Wire Configuration:</p>
+                    <p className=" font-bold">{option.model.type.contactWireConfiguration}</p>
                   </span>
                 </div>
               </div>
@@ -112,10 +120,10 @@ const SectionForm = (props:SectionProps) => {
 
 interface CantileverFormProps {
   external_id:string;
-  model:{code:ModelCode, name:string};
+  model:ModelInterface;
   cantilever:GermanCantilever;
   handleChange: (propertyPath: string, value: number) => void;
-  handleChangeType:(code:ModelCode, name:string, type: TypeCantilever ) => void;
+  handleChangeType:(model:ModelInterface ) => void;
 }
 
 const CantileverForm = (props:CantileverFormProps) => {
@@ -127,7 +135,7 @@ const CantileverForm = (props:CantileverFormProps) => {
       <h4 className="font-bold text-secondary-dark px-4 my-2">{"Cantilever "+external_id}</h4>
 
       <label className="font-bold text-secondary-dark px-4">Cantilever Type</label>
-      <CantileverSelector currentOption={{model,type:cantilever.type }} options={OptionsCantileverData} onChangeType={handleChangeType}/>
+      <CantileverSelector currentOption={{model}} options={OptionsCantileverData} onChangeType={handleChangeType}/>
       <div className="w-full h-full flex flex-col justify-start items-start overflow-y-scroll">
         <SectionForm label={"Main Params"} defaultOpen={true}>
           <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">

@@ -1,8 +1,12 @@
 import { Fragment } from "react/jsx-runtime";
 import { Canvas } from "@react-three/fiber";
-import {PerspectiveCamera, Line, Text, OrbitControls, useGLTF } from "@react-three/drei";
+import {PerspectiveCamera, Line, Text, OrbitControls, useGLTF, Points } from "@react-three/drei";
 import GermanCantilever from "../../models/cantilevers/GermanCantilever";
 import * as THREE from 'three';
+import { extend } from '@react-three/fiber';
+import { SphereGeometry, MeshStandardMaterial } from 'three';
+// Extend the geometries and materials
+extend({ SphereGeometry, MeshStandardMaterial });
 //// Load GLB model and position it at (0, 0, 0)
 interface PropsRailModel {
   pv:number;
@@ -92,6 +96,9 @@ const CantileverViewer = (props:CantileverViewerProps) => {
         maxDistance={100000} // Maximum zoom distance
       />
       <axesHelper args={[1000]} />
+      <ambientLight intensity={10} /> {/* General ambient light */}
+      <directionalLight intensity={4} position={[10, 10, 5]} /> {/* Strong directional light */}
+      <pointLight intensity={4} position={[-10, -10, -5]} /> 
 
       {type == "3D" && labels && (
         <>
@@ -99,17 +106,25 @@ const CantileverViewer = (props:CantileverViewerProps) => {
           <GenerateWires point={cantilever.getMwAxis()} length={2000} />
 
           <Line points={[new THREE.Vector3(cantilever.pv,0,0), new THREE.Vector3(cantilever.pv,cantilever.getMwAxis().y+1000,0)]} color="#FFFF00" lineWidth={4}  dashed/>
+
+          {/*Iterate over points , now with 3D positions*/}
+          {cantilever.generatePoints().map((point, index) => (
+            <mesh key={index} position={[point.x, point.y, point.z]}>
+              <sphereGeometry args={[25, 32, 16]} /> {/* Adjust size and detail */}
+              <meshStandardMaterial color="#003087" />
+            </mesh>
+          ))}
         </>
       )}
+
       {type == "3D" && ambient && (
         <>
-          <ambientLight intensity={10} /> {/* General ambient light */}
-          <directionalLight intensity={4} position={[10, 10, 5]} /> {/* Strong directional light */}
-          <pointLight intensity={4} position={[-10, -10, -5]} /> 
           <RailModel pv={cantilever.pv}/>
           <TrainModel pv={cantilever.pv}/>
         </>
       )}
+
+
       {/* Iterate over links, now with 3D positions */}
       {cantilever.generateLinks().map((link, index) => {
         const start = new THREE.Vector3(link.x1, link.y1, link.z1);

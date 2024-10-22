@@ -1,38 +1,62 @@
-export const OptionsCantileverData:{ id:number, model:{ code:"GY"|"ES"|"FR", name:string }, type: 'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA', icon:string }[] = [
+export const OptionsCantileverData:{ id:number, model:ModelInterface, icon:string }[] = [
   {
     id:1,
     model:{
       code:"GY",
-      name:"German"
+      name:"German",
+      type:{
+        configuration:"TDP<2.2",
+        contactWireConfiguration:'SINGLE',
+      }
     },
-    type:"TDP<2.2",
+    icon:'cantilever_gy_type_1',
+  },
+  {
+    id:1,
+    model:{
+      code:"GY",
+      name:"German",
+      type:{
+        configuration:"TDP<2.2",
+        contactWireConfiguration:'DOUBLE',
+      }
+    },
     icon:'cantilever_gy_type_1',
   },
   {
     id:2,
     model:{
       code:"GY",
-      name:"German"
+      name:"German",
+      type:{
+        configuration:"CAI",
+        contactWireConfiguration:'SINGLE',
+      }
     },
-    type:"CAI",
     icon:'cantilever_gy_type_2',
   },
   {
     id:3,
     model:{
       code:"GY",
-      name:"German"
+      name:"German",
+      type:{
+        configuration:"TDP>2.2",
+        contactWireConfiguration:'SINGLE',
+      }
     },
-    type:"TDP>2.2",
     icon:'cantilever_gy_type_3',
   },
   {
     id:3,
     model:{
       code:"GY",
-      name:"German"
+      name:"German",
+      type:{
+        configuration:"SBA",
+        contactWireConfiguration:'SINGLE',
+      }
     },
-    type:"SBA",
     icon:'cantilever_gy_type_4',
   }
 ];
@@ -48,15 +72,18 @@ export const CantileversData: CantileverParams[] = [
     location_id:24,
     location:"Patio Taller",
     user_id:12,
-    model:{
-      code:"GY",
-      name:"German"
-    },
     created_by:"Dalton Chiarelli",
     created_at: new Date(),
     updated_at: new Date(),
     params: {
-      type: "TDP<2.2",
+      model:{
+        code:"GY",
+        name:"German",
+        type:{
+          configuration:"TDP<2.2",
+          contactWireConfiguration:"SINGLE"
+        }
+      },
       contact_wire_height: 4600,
       system_height: 1600,
       zig_zag: -150,

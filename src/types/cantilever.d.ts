@@ -100,10 +100,23 @@ declare global{
     cw_angle:number;//mm
   }
 
-  export type TypeCantilever = 'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA';
+  export type TypeGermanCantilever = {
+    configuration:'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA';
+    contactWireConfiguration: 'SINGLE' | 'DOUBLE';
+  };
+
+  export type TypeCantilever = TypeGermanCantilever; 
+
+  export type ModelCode = "GY"|"ES"|"FR";
+
+  export type ModelInterface = {
+    code:ModelCode;
+    name:string;
+    type:TypeCantilever;
+  };
 
   export interface CantileverGermanParams {
-    type: TypeCantilever;
+    model:ModelInterface;
     contact_wire_height: number;
     system_height: number;
     zig_zag: number;
@@ -144,8 +157,6 @@ declare global{
     }
   }
 
-  export type ModelCode = "GY"|"ES"|"FR";
-
   export interface CantileverParams {
       id:number;
       external_id:string;
@@ -157,10 +168,6 @@ declare global{
       location_id:number;
       user_id:number;
       created_by:string;
-      model:{
-        code:ModelCode,
-        name:string;
-      }
       params:CantileverGermanParams;
       created_at:Date;
       updated_at:Date;
