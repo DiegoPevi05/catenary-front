@@ -62,6 +62,7 @@ declare global{
     weight:number;
     operating_load:number; //Kilo Newtons
     failing_operating_load:number;//Kilo Newtons
+    hook_x_distance:number;
     a:number;//mm
     d:number;//mm
     L:number;//mm

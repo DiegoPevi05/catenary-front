@@ -36,6 +36,18 @@ export const OptionsCantileverData:{ id:number, model:ModelInterface }[] = [
     },
   },
   {
+    id:4,
+    model:{
+      code:"GY",
+      name:"German",
+      type:{
+        configuration:"SBA",
+        contactWireConfiguration:'DOUBLE',
+      },
+      icon:'cantilever_gy_type_4',
+    },
+  },
+  {
     id:5,
     model:{
       code:"GY",
@@ -205,6 +217,7 @@ export const CantileversData: CantileverParams[] = [
           weight:1.71,
           operating_load:7.5,
           failing_operating_load:22.5,
+          hook_x_distance:62,
           a:75,
           d:62,
           L:122
@@ -403,6 +416,7 @@ export const CantileversData: CantileverParams[] = [
           weight:1.71,
           operating_load:7.5,
           failing_operating_load:22.5,
+          hook_x_distance:62,
           a:75,
           d:62,
           L:122
@@ -469,7 +483,7 @@ export const CantileversData: CantileverParams[] = [
           failing_operating_load:7.5,
           width:45,
           cw_height:61,
-          cw_angle:0
+          cw_angle:90
         }
       }
     }

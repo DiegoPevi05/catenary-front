@@ -1,10 +1,12 @@
 import { Fragment } from "react/jsx-runtime";
 import { Canvas } from "@react-three/fiber";
-import {PerspectiveCamera, Line, Text, OrbitControls, useGLTF, Points } from "@react-three/drei";
+import {PerspectiveCamera, Line, Text, OrbitControls, useGLTF } from "@react-three/drei";
+import { useSpring } from "@react-spring/three"; 
 import GermanCantilever from "../../models/cantilevers/GermanCantilever";
 import * as THREE from 'three';
 import { extend } from '@react-three/fiber';
 import { SphereGeometry, MeshStandardMaterial } from 'three';
+import {useEffect, useState} from "react";
 // Extend the geometries and materials
 extend({ SphereGeometry, MeshStandardMaterial });
 //// Load GLB model and position it at (0, 0, 0)
@@ -20,15 +22,22 @@ const RailModel = (props:PropsRailModel) => {
 };
 
 interface PropsTrainModel {
-  pv:number;
+  pv: number;
+  zPosition: number; // This will be controlled by scrolling
 }
 
-const TrainModel = (props:PropsTrainModel) => {
-  const {pv}= props;
+const TrainModel = (props: PropsTrainModel) => {
+  const { pv, zPosition } = props;
   const { scene } = useGLTF("/models/train.glb"); // Replace with the actual path to your GLB model
 
-  return <primitive object={scene} position={[pv, 0, 0]} scale={1000} />;
-}
+  return (
+    <primitive
+      object={scene}
+      position={[pv, 0, zPosition]} // Position controlled by scroll
+      scale={1100}
+    />
+  );
+};
 
 interface GenerateWiresProps {
   point: { x: number; y: number; z: number };
@@ -76,6 +85,41 @@ const CantileverViewer = (props:CantileverViewerProps) => {
   const cameraPosition:[number,number,number] = [CameraPositionX, CameraPositionY, CameraPositionZ]; // Position the camera
   const target:[number,number,number] = [targetPositionX, targetPositionY, targetPositionZ]; // Target at XY plane
 
+  // State for controlling the z position of the train
+  const [zPosition, setZPosition] = useState(-5600);
+
+  // Set up spring-based smooth animation for the train model movement
+  const [{ z }, setZ] = useSpring(() => ({
+    z: zPosition,
+  }));
+
+  // Function to handle keydown events
+  const handleKeyDown = (event: KeyboardEvent) => {
+    const moveSpeed = 100; // Adjust the speed of movement
+
+    if (event.key === "ArrowRight") {
+      // Move train forward (increase zPosition)
+      setZPosition((prev) => prev + moveSpeed);
+      setZ({ z: zPosition + moveSpeed });
+    } else if (event.key === "ArrowLeft") {
+      // Move train backward (decrease zPosition)
+      setZPosition((prev) => prev - moveSpeed);
+      setZ({ z: zPosition - moveSpeed });
+    }
+  };
+
+  // useEffect to listen for keydown events
+  useEffect(() => {
+    if(type == "3D"){
+      window.addEventListener("keydown", handleKeyDown);
+
+      // Cleanup the event listener on component unmount
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [zPosition,type]);
+
   return(
     <Canvas>
       {/* Update to PerspectiveCamera for better 3D viewing experience */}
@@ -104,13 +148,13 @@ const CantileverViewer = (props:CantileverViewerProps) => {
         <>
           <GenerateWires point={cantilever.getCwAxis()} length={2000} />
           <GenerateWires point={cantilever.getMwAxis()} length={2000} />
-
+          <RailModel pv={cantilever.pv}/>
           <Line points={[new THREE.Vector3(cantilever.pv,0,0), new THREE.Vector3(cantilever.pv,cantilever.getMwAxis().y+1000,0)]} color="#FFFF00" lineWidth={4}  dashed/>
 
           {/*Iterate over points , now with 3D positions*/}
           {cantilever.generatePoints().map((point, index) => (
             <mesh key={index} position={[point.x, point.y, point.z]}>
-              <sphereGeometry args={[25, 32, 16]} /> {/* Adjust size and detail */}
+              <sphereGeometry args={[15, 32, 16]} /> {/* Adjust size and detail */}
               <meshStandardMaterial color="#003087" />
             </mesh>
           ))}
@@ -119,8 +163,7 @@ const CantileverViewer = (props:CantileverViewerProps) => {
 
       {type == "3D" && ambient && (
         <>
-          <RailModel pv={cantilever.pv}/>
-          <TrainModel pv={cantilever.pv}/>
+          <TrainModel pv={cantilever.pv} zPosition={z.get()} />
         </>
       )}
 

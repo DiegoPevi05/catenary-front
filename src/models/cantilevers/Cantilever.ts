@@ -48,7 +48,7 @@ class Cantilever {
     //const ratio = this.esc / this.bitola;
     // Calculate the angle in radians and return it
     //return Math.acos(ratio);
-    return this.degreesToRadians(2);
+    return this.degreesToRadians(0);
   }
 
 

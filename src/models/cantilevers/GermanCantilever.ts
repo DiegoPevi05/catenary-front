@@ -32,9 +32,12 @@ class CantileverGerman extends Cantilever {
   steady_arm:{
     alpha:number;
     end_distance:number;
+    eye_clamp_distance:number|null;
+    stainless_steel_wire_rope:StainlessSteelWireRope|null;
     tube:SteelTube;
     hook_end_fitting:HookEndFitting;
     swivel_clip:SwivelClip;
+    eye_clamp:EyeClamp|null;
   };
 
   // Constructor to initialize the CantileverGerman properties.
@@ -74,9 +77,12 @@ class CantileverGerman extends Cantilever {
     steady_arm:{
       alpha:number;
       end_distance:number;
+      eye_clamp_distance:number|null;
+      stainless_steel_wire_rope:StainlessSteelWireRope|null;
       tube:SteelTube;
       hook_end_fitting:HookEndFitting;
       swivel_clip:SwivelClip;
+      eye_clamp:EyeClamp|null;
     }
   ) {
     // Call the parent constructbior to initialize inherited properties.
@@ -94,6 +100,8 @@ class CantileverGerman extends Cantilever {
   /*********************************************************STAY STUBE***********************************************************************/
   /***************************************************************************************************************************************************/
   /***************************************************************************************************************************************************/
+
+  /***********************************************************TDP<2.2 - SBA - SINGLE - DOUBLE **********************************************************************************/
 
 
   //getWireSupportDistanceFromFixedPoint
@@ -173,6 +181,35 @@ class CantileverGerman extends Cantilever {
   /***************************************************************************************************************************************************/
   /***************************************************************************************************************************************************/
 
+  /*********************************************************SBA - SINGLE - DOUBLE *************************************************************************************/
+
+
+  getUpperEyeClampClevisStainlesStellPoint():{x:number, y:number, z:number}{
+
+    let x0 = 0;
+
+    let y0 = 0;
+
+    let z0 = 0;
+
+    if(this.model.type.configuration == "SBA"){
+
+      let adjustedAngle = this.degreesToRadians(360 - (90 - this.radiansToDegress(this.getInferiorTubeAngle().angle) ));
+
+      x0 =  this.getUpperEyeClampClevisFixedPoint().x + this.bracket_tube.clevis_end_fitting.hook_x_distance * Math.cos(adjustedAngle);
+
+      y0 =  this.getUpperEyeClampClevisFixedPoint().y + this.bracket_tube.clevis_end_fitting.hook_x_distance * Math.sin(adjustedAngle); 
+
+    }
+
+    return { x: x0, y:y0, z:z0  }
+  }
+
+
+
+  /***********************************************************TDP<2.2 - SBA - SINGLE - DOUBLE **********************************************************************************/
+
+
   //TODO to ask dalton
   getBottomPoleFixedPoint():{x:number,y:number, z:number}{
     let x_axis =  this.getUpperPoleFixedPoint().x;
@@ -234,6 +271,8 @@ class CantileverGerman extends Cantilever {
 
 
   /***********************************************************TDP<2.2 - SINGLE**********************************************************************************/
+
+
   getIntersectionTubeFixedPoint():{x:number,y:number, z:number}{
 
     let length_1 = this.getDistanceBetweenTwoPoints(this.getIntersectionPoint(), this.getBottomFixedPoint());
@@ -253,15 +292,62 @@ class CantileverGerman extends Cantilever {
 
     return { x: x_axis, y:y_axis  ,z:0}
   }
+
+  /*********************************************************SBA - SINGLE - DOUBLE *************************************************************************************/
+
+  getSteadyArmEyeClampPoint():{x:number, y:number, z:number}{
+
+    let x0 = 0;
+    let y0 = 0;
+    let z0 = 0;
+
+    if(this.model.type.configuration == "SBA" && this.steady_arm.eye_clamp_distance != null){
+
+      x0 =  this.getSteadyArmFixedPoint().x - this.steady_arm.eye_clamp_distance * Math.cos(this.degreesToRadians(360 + this.steady_arm.alpha));
+
+      y0 =  this.getSteadyArmFixedPoint().y - this.steady_arm.eye_clamp_distance * Math.sin(this.degreesToRadians(360 + this.steady_arm.alpha)); 
+
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
+
+        z0 = this.bracket_tube.eye_clamp.h;
+      }
+
+    };
+
+    return { x: x0, y:y0, z:z0  }
+  }
+
+  getSteadyArmEyeClampFixedPoint():{x:number, y:number, z:number}{
+
+    let x0 = 0;
+    let y0 = 0;
+    let z0 = 0;
+
+    if(this.model.type.configuration == "SBA" && this.steady_arm.eye_clamp != null){
+
+      x0 =  this.getSteadyArmEyeClampPoint().x + this.steady_arm.eye_clamp.h * Math.cos(this.degreesToRadians(360 + 90 + this.steady_arm.alpha));
+
+      y0 =  this.getSteadyArmEyeClampPoint().y + this.steady_arm.eye_clamp.h * Math.sin(this.degreesToRadians(360 + 90 + this.steady_arm.alpha)); 
+
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
+
+        z0 = this.bracket_tube.eye_clamp.h;
+      }
+
+    };
+
+    return { x: x0, y:y0, z:z0  }
+  }
+
   
-  /***********************************************************TDP<2.2 - SINGLE**********************************************************************************/
+  /***********************************************************TDP<2.2 - SBA - SINGLE - DOUBLE **********************************************************************************/
   getIntersectionSteadyArmFixedPoint():{x:number,y:number, z:number}{
 
     let m1 = (this.getUpperTubeEyeClampFixedPoint().y - this.getBottomFixedPoint().y)/(this.getUpperTubeEyeClampFixedPoint().x - this.getBottomFixedPoint().x)
     let theta1 = this.radiansToDegress(Math.atan(m1));
 
     let m2 = Math.tan(this.degreesToRadians(this.steady_arm.alpha));
-    let b2 = this.getSteadyArmEndPoint().y - ((this.getSteadyArmEndPoint().x)*m2);
+    let b2 = this.getSteadyArmFixedPoint().y - ((this.getSteadyArmFixedPoint().x)*m2);
 
     let m3 = -Math.tan(this.degreesToRadians(90-theta1));
     let b3 = this.getIntersectionTubeFixedPoint().y - ((this.getIntersectionTubeFixedPoint().x)*m3);
@@ -279,7 +365,7 @@ class CantileverGerman extends Cantilever {
     let y0 = 0;
     let z0 = 0;
 
-    if(this.model.type.configuration == "TDP<2.2" && this.model.type.contactWireConfiguration == "SINGLE"){
+    if(this.model.type.configuration == "TDP<2.2"){
 
       let angleModified = (180 + this.steady_arm.swivel_clip.cw_angle + this.steady_arm.alpha);
 
@@ -287,20 +373,28 @@ class CantileverGerman extends Cantilever {
 
       y0 =  this.getCwAxis().y - this.steady_arm.swivel_clip.cw_height * Math.sin(this.degreesToRadians(angleModified)); 
 
-    }else if(this.model.type.configuration == "TDP<2.2" && this.model.type.contactWireConfiguration == "DOUBLE"){
+      if(this.model.type.contactWireConfiguration =="DOUBLE"){
 
-      let lenght = this.steady_arm.hook_end_fitting.L - this.steady_arm.hook_end_fitting.a;
+        z0 = this.bracket_tube.eye_clamp.h;
 
-      let angleModified = (180 + this.steady_arm.swivel_clip.cw_angle + this.steady_arm.alpha);
+      }
 
-      x0 =  this.getCwAxis().x - this.steady_arm.swivel_clip.cw_height * Math.cos(this.degreesToRadians(angleModified));
+    }else if(this.model.type.configuration == "SBA" ){
 
-      y0 =  this.getCwAxis().y - this.steady_arm.swivel_clip.cw_height * Math.sin(this.degreesToRadians(angleModified)); 
 
-      z0 = lenght;
+        let angleModified = (180 + this.steady_arm.swivel_clip.cw_angle + this.steady_arm.alpha);
 
-    };
+        x0 =  this.getCwAxis().x - this.steady_arm.swivel_clip.cw_height * Math.cos(this.degreesToRadians(angleModified));
 
+        y0 =  this.getCwAxis().y - this.steady_arm.swivel_clip.cw_height * Math.sin(this.degreesToRadians(angleModified)); 
+
+      if(this.model.type.contactWireConfiguration =="DOUBLE"){
+
+        z0 = this.bracket_tube.eye_clamp.h;
+
+      }
+
+    }
 
 
     return { x: x0, y:y0, z:z0  }
@@ -312,21 +406,27 @@ class CantileverGerman extends Cantilever {
     let y0 = 0;
     let z0 = 0;
 
-    if(this.model.type.configuration == "TDP<2.2" && this.model.type.contactWireConfiguration == "SINGLE"){
+    if(this.model.type.configuration == "TDP<2.2"){
 
       x0 =  this.getSteadyArmFixedPoint().x + this.steady_arm.end_distance * Math.cos(this.degreesToRadians(360 + this.steady_arm.alpha));
 
       y0 =  this.getSteadyArmFixedPoint().y + this.steady_arm.end_distance * Math.sin(this.degreesToRadians(360 + this.steady_arm.alpha)); 
 
-    }else if(this.model.type.configuration == "TDP<2.2" && this.model.type.contactWireConfiguration == "DOUBLE"){
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
 
-      let lenght = this.steady_arm.hook_end_fitting.L - this.steady_arm.hook_end_fitting.a;
+        z0 = this.bracket_tube.eye_clamp.h;
+      }
+
+    }else if(this.model.type.configuration == "SBA"){
 
       x0 =  this.getSteadyArmFixedPoint().x + this.steady_arm.end_distance * Math.cos(this.degreesToRadians(360 + this.steady_arm.alpha));
 
       y0 =  this.getSteadyArmFixedPoint().y + this.steady_arm.end_distance * Math.sin(this.degreesToRadians(360 + this.steady_arm.alpha)); 
 
-      z0 = lenght;
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
+
+        z0 = this.bracket_tube.eye_clamp.h;
+      }
 
     };
 
@@ -339,7 +439,7 @@ class CantileverGerman extends Cantilever {
     let y0 = 0;
     let z0 = 0;
 
-    if(this.model.type.configuration == "TDP<2.2" && this.model.type.contactWireConfiguration == "SINGLE"){
+    if(this.model.type.configuration == "TDP<2.2"){
 
       let m1 = (this.getUpperTubeEyeClampFixedPoint().y - this.getBottomFixedPoint().y)/(this.getUpperTubeEyeClampFixedPoint().x - this.getBottomFixedPoint().x)
       let b1 = (this.getBottomFixedPoint().y)- ((this.getBottomFixedPoint().x)*m1);
@@ -348,11 +448,15 @@ class CantileverGerman extends Cantilever {
       let b2 = this.getSteadyArmEndPoint().y - ((this.getSteadyArmEndPoint().x)*m2);
 
       x0 = (b1-b2)/(m2-m1);
+
       y0 = x0*m1 + b1;
 
-    }else if(this.model.type.configuration == "TDP<2.2" && this.model.type.contactWireConfiguration == "DOUBLE"){
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
 
-      let lenght = this.steady_arm.hook_end_fitting.L - this.steady_arm.hook_end_fitting.a;
+        z0 = this.bracket_tube.eye_clamp.h;
+      }
+
+    }else if(this.model.type.configuration == "SBA"){
 
       let m1 = (this.getUpperTubeEyeClampFixedPoint().y - this.getBottomFixedPoint().y)/(this.getUpperTubeEyeClampFixedPoint().x - this.getBottomFixedPoint().x)
       let b1 = (this.getBottomFixedPoint().y)- ((this.getBottomFixedPoint().x)*m1);
@@ -361,8 +465,13 @@ class CantileverGerman extends Cantilever {
       let b2 = this.getSteadyArmEndPoint().y - ((this.getSteadyArmEndPoint().x)*m2);
 
       x0 = (b1-b2)/(m2-m1);
+
       y0 = x0*m1 + b1;
-      z0 = lenght;
+
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
+
+        z0 = this.bracket_tube.eye_clamp.h;
+      }
 
     }
 
@@ -376,7 +485,21 @@ class CantileverGerman extends Cantilever {
 
     let z0 = 0;
 
-    if(this.model.type.configuration == "TDP<2.2" && this.model.type.contactWireConfiguration == "SINGLE"){
+    if(this.model.type.configuration == "TDP<2.2"){
+
+      let lenght = this.steady_arm.hook_end_fitting.L - this.steady_arm.hook_end_fitting.a
+
+      x0 =  this.getIntersectionSteadyArmFixedPoint().x + lenght*Math.cos(this.degreesToRadians(360+this.steady_arm.alpha));
+
+      y0 =  this.getIntersectionSteadyArmFixedPoint().y + lenght*Math.sin(this.degreesToRadians(360+this.steady_arm.alpha));
+      
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
+
+        z0 = this.bracket_tube.eye_clamp.h;
+
+      }
+
+    }else if(this.model.type.configuration == "SBA"){
 
       let lenght = this.steady_arm.hook_end_fitting.L - this.steady_arm.hook_end_fitting.a
 
@@ -384,15 +507,12 @@ class CantileverGerman extends Cantilever {
 
       y0 =  this.getIntersectionSteadyArmFixedPoint().y + lenght*Math.sin(this.degreesToRadians(360+this.steady_arm.alpha));
 
-    }else if(this.model.type.configuration == "TDP<2.2" && this.model.type.contactWireConfiguration == "DOUBLE"){
 
-      let lenght = this.steady_arm.hook_end_fitting.L - this.steady_arm.hook_end_fitting.a
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
 
-      x0 =  this.getIntersectionPoint().x + lenght*Math.cos(this.degreesToRadians(360+this.steady_arm.alpha));
+        z0 = this.bracket_tube.eye_clamp.h;
 
-      y0 =  this.getIntersectionPoint().y + lenght*Math.sin(this.degreesToRadians(360+this.steady_arm.alpha));
-
-      z0 =  lenght;
+      }
 
     }
 
@@ -434,14 +554,36 @@ class CantileverGerman extends Cantilever {
       }
     ]
 
-    if(this.model.type.configuration != "TDP<2.2"){
+    if(this.model.type.contactWireConfiguration == "DOUBLE"){
+      dimensions.push({
+        name:"steady_arm",
+        diameter:this.steady_arm.tube.d,
+        thickness:this.steady_arm.tube.s,
+        length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getSteadyArmHookEndFittingPoint()),2),
+        cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getSteadyArmEndPoint(),this.getSteadyArmHookEndFittingPoint()),-1) 
+      })
+    }
+
+    if(this.model.type.configuration == "SBA"){
       dimensions.push({
         name:"steel_cable",
-        diameter:this.stay_tube.tube.d,
-        thickness:this.stay_tube.tube.s,
-        length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),2),
-        cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getUpperIsolatorPoint(),this.getUpperTubeEndPoint()),-1) 
+        diameter:this.steady_arm.stainless_steel_wire_rope?.d ?? 0,
+        thickness:0,
+        length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getSteadyArmEyeClampFixedPoint(),this.getUpperEyeClampClevisStainlesStellPoint()),2),
+        cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getSteadyArmEyeClampFixedPoint(),this.getUpperEyeClampClevisStainlesStellPoint()),-1) 
       })
+
+      if(this.model.type.contactWireConfiguration == "DOUBLE"){
+
+        dimensions.push({
+          name:"steel_cable",
+          diameter:this.steady_arm.stainless_steel_wire_rope?.d ?? 0,
+          thickness:0,
+          length_tube:this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getSteadyArmEyeClampFixedPoint(),this.getUpperEyeClampClevisStainlesStellPoint()),2),
+          cut_length: this.roundToDecimals(this.getDistanceBetweenTwoPoints(this.getSteadyArmEyeClampFixedPoint(),this.getUpperEyeClampClevisStainlesStellPoint()),-1) 
+        })
+
+      }
     }
 
     if(this.model.type.configuration == "CAI"){
@@ -539,8 +681,72 @@ class CantileverGerman extends Cantilever {
       links.push({  x1: this.getSteadyArmHookEndFittingPoint().x, y1:this.getSteadyArmHookEndFittingPoint().y , z1:this.getSteadyArmHookEndFittingPoint().z,  x2: this.getSteadyArmFixedPoint().x, y2:this.getSteadyArmFixedPoint().y, z2:this.getSteadyArmFixedPoint().z, dimension_line:true });
 
       links.push({  x1: this.getSteadyArmHookEndFittingPoint().x, y1:this.getSteadyArmHookEndFittingPoint().y , z1:-this.getSteadyArmHookEndFittingPoint().z,  x2: this.getSteadyArmFixedPoint().x, y2:this.getSteadyArmFixedPoint().y, z2:-this.getSteadyArmFixedPoint().z, dimension_line:true });
-    };
 
+    }else if(this.model.type.configuration == "SBA" && this.model.type.contactWireConfiguration == "SINGLE"){
+
+      links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:this.getSteadyArmFixedPoint().z,  x2: this.getCwAxis().x, y2:this.getCwAxis().y, z2:this.getCwAxis().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:this.getSteadyArmFixedPoint().z,  x2: this.getSteadyArmEndPoint().x, y2:this.getSteadyArmEndPoint().y, z2:this.getSteadyArmEndPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getIntersectionTubeFixedPoint().x, y1:this.getIntersectionTubeFixedPoint().y , z1:this.getIntersectionTubeFixedPoint().z,  x2: this.getIntersectionSteadyArmFixedPoint().x, y2:this.getIntersectionSteadyArmFixedPoint().y, z2:this.getIntersectionSteadyArmFixedPoint().z, dimension_line:true });
+
+
+      links.push({  x1: this.getIntersectionSteadyArmFixedPoint().x, y1:this.getIntersectionSteadyArmFixedPoint().y , z1:this.getIntersectionSteadyArmFixedPoint().z,  x2: this.getSteadyArmHookEndFittingPoint().x, y2:this.getSteadyArmHookEndFittingPoint().y, z2:this.getSteadyArmHookEndFittingPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmHookEndFittingPoint().x, y1:this.getSteadyArmHookEndFittingPoint().y , z1:this.getSteadyArmHookEndFittingPoint().z,  x2: this.getSteadyArmEyeClampPoint().x, y2:this.getSteadyArmEyeClampPoint().y, z2:this.getSteadyArmEyeClampPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmEyeClampPoint().x, y1:this.getSteadyArmEyeClampPoint().y , z1:this.getSteadyArmEyeClampPoint().z,  x2: this.getSteadyArmFixedPoint().x, y2:this.getSteadyArmFixedPoint().y, z2:this.getSteadyArmHookEndFittingPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmEyeClampPoint().x, y1:this.getSteadyArmEyeClampPoint().y , z1:this.getSteadyArmEyeClampPoint().z,  x2: this.getSteadyArmEyeClampFixedPoint().x, y2:this.getSteadyArmEyeClampFixedPoint().y, z2:this.getSteadyArmEyeClampFixedPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmEyeClampFixedPoint().x, y1:this.getSteadyArmEyeClampFixedPoint().y , z1:this.getSteadyArmEyeClampFixedPoint().z,  x2: this.getUpperEyeClampClevisStainlesStellPoint().x, y2:this.getUpperEyeClampClevisStainlesStellPoint().y, z2:this.getUpperEyeClampClevisStainlesStellPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getUpperEyeClampClevisFixedPoint().x, y1:this.getUpperEyeClampClevisFixedPoint().y , z1:this.getUpperEyeClampClevisFixedPoint().z,  x2: this.getUpperEyeClampClevisStainlesStellPoint().x, y2:this.getUpperEyeClampClevisStainlesStellPoint().y, z2:this.getUpperEyeClampClevisStainlesStellPoint().z, dimension_line:true });
+
+
+    }else if(this.model.type.configuration == "SBA" && this.model.type.contactWireConfiguration == "DOUBLE"){
+
+      links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:this.getSteadyArmFixedPoint().z,  x2: this.getCwAxis().x, y2:this.getCwAxis().y, z2:this.getSteadyArmFixedPoint().z, dimension_line:true });
+      links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:-this.getSteadyArmFixedPoint().z,  x2: this.getCwAxis().x, y2:this.getCwAxis().y, z2:-this.getSteadyArmFixedPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:this.getSteadyArmFixedPoint().z,  x2: this.getSteadyArmEndPoint().x, y2:this.getSteadyArmEndPoint().y, z2:this.getSteadyArmEndPoint().z, dimension_line:true });
+      links.push({  x1: this.getSteadyArmFixedPoint().x, y1:this.getSteadyArmFixedPoint().y , z1:-this.getSteadyArmFixedPoint().z,  x2: this.getSteadyArmEndPoint().x, y2:this.getSteadyArmEndPoint().y, z2:-this.getSteadyArmEndPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getIntersectionPoint().x, y1:this.getIntersectionPoint().y , z1:this.getIntersectionPoint().z,  x2: this.getIntersectionPoint().x, y2:this.getIntersectionPoint().y, z2:0, dimension_line:true });
+      links.push({  x1: this.getIntersectionPoint().x, y1:this.getIntersectionPoint().y , z1:-this.getIntersectionPoint().z,  x2: this.getIntersectionPoint().x, y2:this.getIntersectionPoint().y, z2:0, dimension_line:true });
+
+      links.push({  x1: this.getIntersectionPoint().x, y1:this.getIntersectionPoint().y , z1:this.getIntersectionPoint().z,  x2: this.getSteadyArmHookEndFittingPoint().x, y2:this.getSteadyArmHookEndFittingPoint().y, z2:this.getSteadyArmHookEndFittingPoint().z, dimension_line:true });
+      links.push({  x1: this.getIntersectionPoint().x, y1:this.getIntersectionPoint().y , z1:-this.getIntersectionPoint().z,  x2: this.getSteadyArmHookEndFittingPoint().x, y2:this.getSteadyArmHookEndFittingPoint().y, z2:-this.getSteadyArmHookEndFittingPoint().z, dimension_line:true });
+
+
+
+      links.push({  x1: this.getSteadyArmHookEndFittingPoint().x, y1:this.getSteadyArmHookEndFittingPoint().y , z1:this.getSteadyArmHookEndFittingPoint().z,  x2: this.getSteadyArmEyeClampPoint().x, y2:this.getSteadyArmEyeClampPoint().y, z2:this.getSteadyArmEyeClampPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmHookEndFittingPoint().x, y1:this.getSteadyArmHookEndFittingPoint().y , z1:-this.getSteadyArmHookEndFittingPoint().z,  x2: this.getSteadyArmEyeClampPoint().x, y2:this.getSteadyArmEyeClampPoint().y, z2:-this.getSteadyArmEyeClampPoint().z, dimension_line:true });
+
+
+      links.push({  x1: this.getSteadyArmEyeClampPoint().x, y1:this.getSteadyArmEyeClampPoint().y , z1:this.getSteadyArmEyeClampPoint().z,  x2: this.getSteadyArmFixedPoint().x, y2:this.getSteadyArmFixedPoint().y, z2:this.getSteadyArmHookEndFittingPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmEyeClampPoint().x, y1:this.getSteadyArmEyeClampPoint().y , z1:-this.getSteadyArmEyeClampPoint().z,  x2: this.getSteadyArmFixedPoint().x, y2:this.getSteadyArmFixedPoint().y, z2:-this.getSteadyArmHookEndFittingPoint().z, dimension_line:true });
+
+
+      links.push({  x1: this.getSteadyArmEyeClampPoint().x, y1:this.getSteadyArmEyeClampPoint().y , z1:this.getSteadyArmEyeClampPoint().z,  x2: this.getSteadyArmEyeClampFixedPoint().x, y2:this.getSteadyArmEyeClampFixedPoint().y, z2:this.getSteadyArmEyeClampFixedPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmEyeClampPoint().x, y1:this.getSteadyArmEyeClampPoint().y , z1:-this.getSteadyArmEyeClampPoint().z,  x2: this.getSteadyArmEyeClampFixedPoint().x, y2:this.getSteadyArmEyeClampFixedPoint().y, z2:-this.getSteadyArmEyeClampFixedPoint().z, dimension_line:true });
+
+
+      links.push({  x1: this.getSteadyArmEyeClampFixedPoint().x, y1:this.getSteadyArmEyeClampFixedPoint().y , z1:this.getSteadyArmEyeClampFixedPoint().z,  x2: this.getUpperEyeClampClevisStainlesStellPoint().x, y2:this.getUpperEyeClampClevisStainlesStellPoint().y, z2:this.getUpperEyeClampClevisStainlesStellPoint().z, dimension_line:true });
+
+      links.push({  x1: this.getSteadyArmEyeClampFixedPoint().x, y1:this.getSteadyArmEyeClampFixedPoint().y , z1:-this.getSteadyArmEyeClampFixedPoint().z,  x2: this.getUpperEyeClampClevisStainlesStellPoint().x, y2:this.getUpperEyeClampClevisStainlesStellPoint().y, z2:this.getUpperEyeClampClevisStainlesStellPoint().z, dimension_line:true });
+
+
+
+
+      links.push({  x1: this.getUpperEyeClampClevisFixedPoint().x, y1:this.getUpperEyeClampClevisFixedPoint().y , z1:this.getUpperEyeClampClevisFixedPoint().z,  x2: this.getUpperEyeClampClevisStainlesStellPoint().x, y2:this.getUpperEyeClampClevisStainlesStellPoint().y, z2:this.getUpperEyeClampClevisStainlesStellPoint().z, dimension_line:true });
+
+
+
+    }
 
     return links;
   }

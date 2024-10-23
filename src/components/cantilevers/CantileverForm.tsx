@@ -373,6 +373,31 @@ const CantileverForm = (props:CantileverFormProps) => {
           </div>
         </SectionForm>
         <SectionForm label={"Steady Arm"}>
+          {cantilever.model.type.configuration == "SBA" && (
+            <>
+            <div className="col-span-2">
+              <label className="font-bold text-secondary-dark">Eye Clamp</label>
+            </div>
+            <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
+              <p className="font-bold text-primary ">Eye Clamp Distance (mm)</p>
+              <input
+                type="number"
+                className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
+                value={cantilever.steady_arm.eye_clamp_distance ?? 0}
+                onChange={(e) => handleChange('params.steady_arm.eye_clamp_distance', parseFloat(e.target.value))}
+              />
+            </div>
+            <div className="col-span-1 flex flex-col justify-start items-start gap-y-2">
+              <p className="font-bold text-primary ">Eye Clamp - Tube to Pin Length</p>
+              <input
+                type="number"
+                className="border-b-[2px] border-b-primary focus:outline-none focus:border-b-[3px] w-full px-2 py-2"
+                value={cantilever.steady_arm.eye_clamp?.h ?? 0}
+                onChange={(e) => handleChange('params.steady_arm.eye_clamp.h', parseFloat(e.target.value))}
+              />
+            </div>
+            </>
+          )}
           <div className="col-span-2">
             <label className="font-bold text-secondary-dark">Swivel Clip</label>
           </div>
