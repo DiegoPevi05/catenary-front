@@ -99,6 +99,15 @@ declare global{
     cw_height:number;//mm
     cw_angle:number;//mm
   }
+  
+  interface StainlessSteelWireRope{
+    id:number;
+    order_id:string;
+    designation:string;
+    weight:number;
+    min_breaking_force:number;
+    d:number;
+  }
 
   export type TypeGermanCantilever = {
     configuration:'TDP<2.2' | 'TDP>2.2' | 'CAI' | 'SBA';
@@ -113,6 +122,7 @@ declare global{
     code:ModelCode;
     name:string;
     type:TypeCantilever;
+    icon:string|null;
   };
 
   export interface CantileverGermanParams {
@@ -150,10 +160,13 @@ declare global{
     } | null,
     steady_arm:{
       alpha:number;
-      tube:SteelTube;
       end_distance:number;
+      eye_clamp_distance:number|null;
+      stainless_steel_wire_rope:StainlessSteelWireRope|null;
+      tube:SteelTube;
       hook_end_fitting:HookEndFitting;
       swivel_clip:SwivelClip;
+      eye_clamp:EyeClamp|null;
     }
   }
 

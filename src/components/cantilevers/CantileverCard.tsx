@@ -46,7 +46,7 @@ const CantileverCard = (props:CantileverCard) => {
     <>
       <div onClick={onHandlerCantilever} key={`cantilever-${cantilever.id}-${index}`} className="border border-2 border-gray-light rounded-xl flex flex-row justify-start items-start w-full h-auto p-4 duration-300 hover:bg-primary group animation-element slide-in-up bg-white cursor-pointer">
         <div className="w-24 h-full p-4 flex justify-center items-center group-active:scale-95 duration-300 text-body group-hover:text-white">
-          <SvgComponent icon="cantilever_gy_type_1"/>
+          <SvgComponent icon={cantilever.params.model.icon ?? "cantilever_gy_type_1"}/>
         </div>
         <div className="w-auto h-full flex flex-col justify-start items-start gap-y-1 text-body group-hover:text-white">
           <div className="flex flex-row gap-x-2">

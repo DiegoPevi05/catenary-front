@@ -7,7 +7,7 @@ import SvgComponent from "../SvgComponent";
 import { OptionsCantileverData } from "../../models/cantilevers/data";
 
 interface PropsCantileverSelector {
-  options:{ id:number, model:ModelInterface, icon:string }[];
+  options:{ id:number, model:ModelInterface }[];
   currentOption: { model:ModelInterface };
   onChangeType:(model:ModelInterface ) => void;
 }
@@ -16,15 +16,13 @@ const CantileverSelector = (props:PropsCantileverSelector) => {
 
   const {options, currentOption, onChangeType} = props;
 
-  const currentIcon = options.find((item) => (item.model.code == currentOption.model.code && item.model.type.configuration == currentOption.model.type.configuration && item.model.type.contactWireConfiguration ==  currentOption.model.type.contactWireConfiguration))
-
   const [showOptions,setShowOptions] = useState<boolean>(false);
 
   const toggleShow = () => {
     setShowOptions(!showOptions);
   }
 
-  const handleSelectOption = (option:{ id:number, model:ModelInterface, icon:string }) => {
+  const handleSelectOption = (option:{ id:number, model:ModelInterface }) => {
     onChangeType(option.model);
     setShowOptions(false);
   }
@@ -33,7 +31,7 @@ const CantileverSelector = (props:PropsCantileverSelector) => {
     <div className="w-full h-auto relative my-4">
       <div onClick={toggleShow} className="w-[95%] h-auto flex flex-row items-center text-body shadow-sm border border-gray-light rounded-xl px-6 py-4 hover:bg-primary hover:text-white cursor-pointer active:scale-95 duration-300 mx-auto">
         <span className="h-full w-24">
-          <SvgComponent icon={currentIcon?.icon ?? ""}/>
+          <SvgComponent icon={currentOption.model.icon ?? "cantilever_gy_type_1"}/>
         </span>
         <div className="w-full h-full flex flex-col items-end">
           <span className="h-auto w-auto flex flex-row gap-x-4">
@@ -56,7 +54,7 @@ const CantileverSelector = (props:PropsCantileverSelector) => {
             return(
               <div onClick={()=>handleSelectOption(option)} key={"key_option_cantilever_"+index} className="w-[95%] h-auto flex flex-row items-center text-body shadow-sm border border-gray-light rounded-xl px-6 py-4 hover:bg-primary hover:text-white cursor-pointer active:scale-95 duration-300 mx-auto">
                 <span className="h-full w-24">
-                  <SvgComponent icon={option.icon}/>
+                  <SvgComponent icon={option.model.icon ?? "cantilever_gy_type_1"}/>
                 </span>
                 <div className="w-full h-full flex flex-col items-end">
                   <span className="h-auto w-auto flex flex-row gap-x-4">
